@@ -38,7 +38,7 @@ export const Home: GlobalConfig = {
         {
           name: 'heroTagline',
           type: 'text',
-          defaultValue: 'I build the systems small businesses run on.',
+          defaultValue: 'I engineer the software systems that businesses run on — and keep running.',
           required: true,
           localized: true,
           admin: {

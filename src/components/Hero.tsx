@@ -219,18 +219,31 @@ export function Hero({
 
         {/* Ansh Rajput Name & Tagline */}
         <div
-          className={`name-banner absolute inset-0 flex flex-col items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
+          className={`name-banner absolute inset-0 flex flex-col items-center justify-center transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
             isDone
-              ? 'opacity-100 translate-y-0 pointer-events-auto'
-              : 'opacity-0 translate-y-4 pointer-events-none'
+              ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
+              : 'opacity-0 translate-y-6 scale-95 pointer-events-none'
           }`}
         >
-          <h1 className="m-0 text-[clamp(44px,13vw,76px)] font-bold tracking-[-0.045em] leading-[0.95] text-white">
+          {/* Subtle Emerald Ambient Halo */}
+          <div className="absolute -inset-4 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none -z-10" />
+
+          {/* Role Pill Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[12px] font-semibold text-emerald-300 mb-2.5 backdrop-blur-md shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Founder @ HeyGrowin · Data Analysis, Uni Messina</span>
+          </div>
+
+          <h1 className="m-0 text-[clamp(44px,13vw,76px)] font-extrabold tracking-[-0.04em] leading-[0.95] text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-100 to-slate-300 drop-shadow-sm">
             {name}
           </h1>
-          <p className="mt-3 text-[17px] leading-[1.4] text-[rgba(241,245,249,0.72)] max-w-[32ch] text-center">
+
+          <p className="mt-3 text-[17px] sm:text-[18px] font-semibold leading-[1.35] text-white max-w-[34ch] text-center">
             {tagline}
           </p>
+          <span className="mt-1 text-[13px] text-[rgba(241,245,249,0.7)] max-w-[38ch] text-center font-medium hidden sm:inline-block">
+            Autonomous workflows, real-time inventories, and zero-downtime platforms.
+          </span>
         </div>
       </div>
 

@@ -103,7 +103,7 @@ export default async function Page({ searchParams }: PageProps) {
     name: homeData?.hero?.heroName || 'Ansh Rajput',
     tagline:
       homeData?.hero?.heroTagline ||
-      'I build the systems small businesses run on.',
+      'I engineer the software systems that businesses run on — and keep running.',
     cityLabel: homeData?.hero?.cityLabel || 'Messina',
     timezone: homeData?.hero?.timezone || 'Europe/Rome',
     buttonWorkLabel: homeData?.hero?.buttonWorkLabel || 'See my work',

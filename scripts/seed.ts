@@ -723,7 +723,7 @@ export async function seedDatabase() {
     data: {
       hero: {
         heroName: 'Ansh Rajput',
-        heroTagline: 'I build the systems small businesses run on.',
+        heroTagline: 'I engineer the software systems that businesses run on — and keep running.',
         cityLabel: 'Messina',
         timezone: 'Europe/Rome',
         buttonWorkLabel: 'See my work',
