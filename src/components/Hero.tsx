@@ -58,7 +58,6 @@ export function Hero({
   const [isDone, setIsDone] = useState<boolean>(false)
   const [isListOpen, setIsListOpen] = useState<boolean>(false)
   const [activeCards, setActiveCards] = useState<CardState[]>([])
-  const [isMuted, setIsMuted] = useState<boolean>(false)
 
   const timersRef = useRef<NodeJS.Timeout[]>([])
   const feedRef = useRef<HTMLDivElement>(null)
@@ -186,32 +185,21 @@ export function Hero({
         `,
       }}
     >
-      {/* Top Status Bar with real Messina time, Sound toggle and Skip button */}
+      {/* Top Status Bar with real Messina time and Skip button */}
       <div className="w-full max-w-[440px] flex justify-between items-center text-[13px] font-medium text-[rgba(241,245,249,0.68)]">
         <span id="sbTime" aria-label={`Messina Time: ${timeStr}`}>
           {timeStr}
         </span>
-        <div className="flex items-center gap-2.5">
+        {!isDone && (
           <button
             type="button"
-            onClick={() => setIsMuted(soundManager.toggleMute())}
-            title={isMuted ? 'Unmute sounds' : 'Mute sounds'}
-            aria-label={isMuted ? 'Unmute sounds' : 'Mute sounds'}
-            className="p-1 rounded-md text-[13px] text-white/70 hover:text-white transition-colors cursor-pointer"
+            id="skip"
+            onClick={finishSequence}
+            className="skip bg-transparent border-0 text-[rgba(241,245,249,0.68)] hover:text-[#F1F5F9] py-1 px-1 cursor-pointer transition-colors"
           >
-            {isMuted ? '🔇' : '🔊'}
+            Skip
           </button>
-          {!isDone && (
-            <button
-              type="button"
-              id="skip"
-              onClick={finishSequence}
-              className="skip bg-transparent border-0 text-[rgba(241,245,249,0.68)] hover:text-[#F1F5F9] py-1 px-1 cursor-pointer transition-colors"
-            >
-              Skip
-            </button>
-          )}
-        </div>
+        )}
       </div>
 
       {/* Top Title / Clock Area */}
