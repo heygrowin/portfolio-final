@@ -263,13 +263,23 @@ export function Footer() {
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={scrollToTop}
-            className="px-4 py-2 rounded-full border border-slate-800 hover:border-teal-500 bg-slate-900 text-slate-300 hover:text-white text-[12px] font-bold transition-all cursor-pointer flex items-center gap-1.5"
-          >
-            <span>↑ Back to top</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <a
+              href="/admin"
+              className="px-3 py-2 rounded-full border border-slate-800 hover:border-slate-700 bg-slate-900/60 text-slate-400 hover:text-white text-[12px] font-medium transition-all flex items-center gap-1"
+              title="Open Payload CMS Admin Panel"
+            >
+              <span>⚙️ CMS Admin</span>
+            </a>
+
+            <button
+              type="button"
+              onClick={scrollToTop}
+              className="px-4 py-2 rounded-full border border-slate-800 hover:border-teal-500 bg-slate-900 text-slate-300 hover:text-white text-[12px] font-bold transition-all cursor-pointer flex items-center gap-1.5"
+            >
+              <span>↑ Back to top</span>
+            </button>
+          </div>
         </div>
       </div>
     </footer>
