@@ -114,11 +114,17 @@ export function Education({ anchorId = 'education' }: EducationProps) {
             </p>
           </div>
 
-          <ul className="mt-3.5 space-y-2 text-[14px] text-slate-600 dark:text-slate-300 list-none p-0 m-0">
+          <ul className="mt-3.5 space-y-2.5 text-[14px] text-slate-600 dark:text-slate-300 list-none p-0 m-0">
             <li className="flex items-start gap-2">
               <span className="text-teal-500 font-bold mt-0.5">▸</span>
               <span>
                 <strong className="text-slate-900 dark:text-white">Cyber In-Charge:</strong> Managed school technical systems and organised inter-school technology competitions including EVOLV 2025.
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-teal-500 font-bold mt-0.5">▸</span>
+              <span>
+                <strong className="text-slate-900 dark:text-white">Organised EVOLV 2025:</strong> Spearheaded EVOLV 2025, an inter-school technology competition.
               </span>
             </li>
             <li className="flex items-start gap-2">
