@@ -1,0 +1,40 @@
+/* HeyGrowin Admin Branding */
+:root {
+  --theme-elevation-50: #0F172A;
+  --theme-elevation-100: #1E293B;
+  --theme-elevation-150: #334155;
+  --theme-elevation-200: #475569;
+  --theme-elevation-250: #64748B;
+  --theme-elevation-300: #94A3B8;
+  --theme-elevation-350: #CBD5E1;
+  --theme-elevation-400: #E2E8F0;
+  --theme-elevation-450: #F1F5F9;
+  --theme-elevation-500: #F8FAFC;
+  --theme-elevation-550: #FFFFFF;
+
+  --theme-success-500: #10B981;
+  --theme-warning-500: #F59E0B;
+  --theme-error-500: #EF4444;
+
+  --theme-primary-500: #0F766E;
+  --theme-primary-600: #0D655E;
+  --theme-primary-700: #0B534D;
+}
+
+/* Brand badge in sidebar */
+.nav .nav__brand {
+  color: #10B981 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em;
+}
+
+/* Primary buttons in admin */
+.btn--style-primary {
+  background-color: #0F766E !important;
+  border-color: #0F766E !important;
+}
+
+.btn--style-primary:hover {
+  background-color: #0D655E !important;
+  border-color: #0D655E !important;
+}
