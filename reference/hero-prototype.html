@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ansh Rajput — hero prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night-1:#0A2A2A; --night-2:#0F172A;
+  --brand:#0F766E; --accent:#10B981;
+  --glass:rgba(255,255,255,.075); --card:rgba(24,38,52,.86); --glass-line:rgba(255,255,255,.10);
+  --on-night:#F1F5F9; --on-night-soft:rgba(241,245,249,.68);
+  --page:#FFFFFF; --page-ink:#0F172A; --page-text:#475569; --page-line:#E2E8F0;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){ --page:#0B1220; --page-ink:#F1F5F9; --page-text:#A8B3C4; --page-line:#1E293B; color-scheme:dark; }
+}
+:root[data-theme="dark"]{ --page:#0B1220; --page-ink:#F1F5F9; --page-text:#A8B3C4; --page-line:#1E293B; color-scheme:dark; }
+html{ scroll-padding-top:env(safe-area-inset-top,0px); background:var(--night-2); }
+*,*::before,*::after{ box-sizing:inherit; }
+body{ margin:0; background:var(--page); font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; -webkit-font-smoothing:antialiased; }
+button{ font:inherit; }
+:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:6px; }
+
+/* ---------- hero: a phone lockscreen at night ---------- */
+.hero{
+  position:relative; min-height:100svh; overflow:hidden; color:var(--on-night);
+  background:
+    radial-gradient(120% 70% at 50% 110%, rgba(16,185,129,.22), transparent 60%),
+    linear-gradient(180deg,var(--night-1) 0%,var(--night-2) 70%);
+  display:flex; flex-direction:column; align-items:center;
+  padding:18px 20px 28px;
+}
+.status{ width:100%; max-width:440px; display:flex; justify-content:space-between; font-size:13px; font-weight:500; color:var(--on-night-soft); }
+.skip{ background:none; border:0; color:var(--on-night-soft); padding:4px 2px; cursor:pointer; }
+.skip:hover{ color:var(--on-night); }
+
+.top{ position:relative; width:100%; max-width:440px; height:150px; margin-top:22px; text-align:center; transition:margin-top .8s cubic-bezier(.2,.8,.2,1); }
+.done .top{ margin-top:clamp(22px,13svh,140px); }
+.clock, .name{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity .6s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
+.clock .date{ font-size:15px; font-weight:500; color:var(--on-night-soft); }
+.clock .time{ font-size:84px; font-weight:600; letter-spacing:-.04em; line-height:1; margin-top:2px; font-variant-numeric:tabular-nums; }
+.name{ opacity:0; transform:translateY(18px); }
+.name h1{ margin:0; font-size:clamp(48px,14vw,76px); font-weight:700; letter-spacing:-.045em; line-height:.95; }
+.name p{ margin:12px 0 0; font-size:17px; line-height:1.4; color:var(--on-night-soft); max-width:30ch; }
+
+.done .clock{ opacity:0; transform:translateY(-14px) scale(.96); }
+.done .name{ opacity:1; transform:none; }
+
+/* notification stack */
+.feed{ position:relative; width:100%; max-width:440px; height:360px; margin-top:18px; transition:height .5s ease; }
+.card{
+  position:absolute; left:0; right:0; top:0;
+  display:grid; grid-template-columns:38px 1fr auto; gap:2px 12px; align-items:start;
+  padding:12px 14px; border-radius:20px;
+  background:var(--card); border:1px solid var(--glass-line);
+  -webkit-backdrop-filter:blur(18px) saturate(140%); backdrop-filter:blur(18px) saturate(140%);
+  box-shadow:0 8px 30px rgba(0,0,0,.25);
+  transform-origin:50% 100%;
+  transition:transform .45s cubic-bezier(.2,.8,.2,1), opacity .45s ease;
+  will-change:transform,opacity;
+}
+.card .ico{ grid-row:span 2; width:38px; height:38px; border-radius:10px; display:grid; place-items:center; }
+.card .ico svg{ width:20px; height:20px; stroke:#fff; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.card .app{ font-size:13px; font-weight:600; color:var(--on-night); }
+.card .when{ font-size:12px; color:var(--on-night-soft); }
+.card .msg{ grid-column:2 / span 2; font-size:14px; line-height:1.35; color:var(--on-night-soft); }
+.card .msg b{ display:block; font-weight:600; color:var(--on-night); }
+
+.card > *{ transition:opacity .3s ease; }
+.card.stacked > *{ opacity:0; }
+.done .card{ opacity:0 !important; transform:translateY(-200px) scale(.7) !important; pointer-events:none; }
+
+/* collapsed group after the storm */
+.group{
+  position:absolute; left:0; right:0; top:0; opacity:0; transform:translateY(10px);
+  transition:opacity .5s ease .35s, transform .5s ease .35s; pointer-events:none;
+}
+.done .group{ opacity:1; transform:none; pointer-events:auto; position:relative; }
+.done .feed{ height:auto; min-height:80px; }
+.group button{
+  width:100%; text-align:left; cursor:pointer; color:var(--on-night);
+  padding:14px 16px; border-radius:20px; background:var(--glass); border:1px solid var(--glass-line);
+  -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px);
+  display:flex; align-items:center; gap:12px; position:relative;
+}
+.group button::after{ content:""; position:absolute; left:14px; right:14px; bottom:-7px; height:12px; border-radius:0 0 16px 16px; background:rgba(255,255,255,.05); border:1px solid var(--glass-line); border-top:0; z-index:-1; }
+.pulse{ width:10px; height:10px; border-radius:50%; background:var(--accent); flex:none; box-shadow:0 0 0 0 rgba(16,185,129,.6); animation:pulse 2.4s ease-out infinite; }
+@keyframes pulse{ 0%{box-shadow:0 0 0 0 rgba(16,185,129,.55)} 70%{box-shadow:0 0 0 10px rgba(16,185,129,0)} 100%{box-shadow:0 0 0 0 rgba(16,185,129,0)} }
+.group strong{ font-weight:600; font-size:15px; display:block; }
+.group span.sub{ font-size:13px; color:var(--on-night-soft); }
+.list{ display:none; margin-top:14px; max-height:320px; overflow:auto; padding-right:2px; }
+.list.open{ display:grid; gap:8px; }
+.list .row{ display:grid; grid-template-columns:30px 1fr; gap:10px; align-items:center; padding:10px 12px; border-radius:14px; background:rgba(255,255,255,.05); font-size:14px; color:var(--on-night-soft); }
+.list .row b{ color:var(--on-night); font-weight:600; }
+.list .row .ico{ width:30px; height:30px; border-radius:8px; display:grid; place-items:center; }
+.list .row .ico svg{ width:16px; height:16px; stroke:#fff; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+
+.actions{
+  width:100%; max-width:440px; margin-top:auto; display:grid; gap:10px; padding-top:20px;
+  opacity:0; transform:translateY(12px); transition:opacity .5s ease .6s, transform .5s ease .6s; pointer-events:none;
+}
+.done .actions{ opacity:1; transform:none; pointer-events:auto; }
+.btn{ display:flex; justify-content:center; align-items:center; min-height:52px; border-radius:16px; font-size:16px; font-weight:600; text-decoration:none; cursor:pointer; border:0; }
+.btn.primary{ background:var(--accent); color:#04261C; }
+.btn.primary:hover{ background:#34D399; }
+.btn.ghost{ background:transparent; color:var(--on-night); border:1px solid rgba(255,255,255,.22); }
+.btn.ghost:hover{ border-color:rgba(255,255,255,.45); }
+.note{ text-align:center; font-size:13px; color:var(--on-night-soft); margin:6px 0 0; }
+.replay{ background:none; border:0; color:var(--on-night-soft); text-decoration:underline; text-underline-offset:3px; cursor:pointer; padding:2px; }
+
+/* ---------- the day begins below ---------- */
+.day{ background:var(--page); color:var(--page-text); padding:64px 24px 80px; }
+.day .inner{ max-width:640px; margin:0 auto; }
+.day h2{ color:var(--page-ink); font-size:32px; letter-spacing:-.03em; margin:0 0 12px; font-weight:700; line-height:1.1; }
+.day p{ font-size:17px; line-height:1.6; margin:0; max-width:56ch; }
+
+@media (min-width:900px){
+  .hero{ padding-top:32px; }
+  .feed{ height:400px; }
+  .actions{ grid-template-columns:1fr 1fr; }
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{ transition:none !important; animation:none !important; }
+}
+</style>
+</head>
+<body>
+<main>
+<section class="hero" id="hero" aria-label="Introduction">
+  <div class="status">
+    <span id="sbTime">--:--</span>
+    <button class="skip" id="skip" type="button">Skip</button>
+  </div>
+
+  <div class="top">
+    <div class="clock" aria-hidden="true">
+      <div class="date" id="date">Messina</div>
+      <div class="time" id="time">--:--</div>
+    </div>
+    <div class="name">
+      <h1>Ansh Rajput</h1>
+      <p>I build the systems small businesses run on.</p>
+    </div>
+  </div>
+
+  <div class="feed" id="feed" aria-live="off">
+    <div class="group">
+      <button type="button" id="groupBtn" aria-expanded="false" aria-controls="list">
+        <span class="pulse" aria-hidden="true"></span>
+        <span><strong id="groupTitle">14 updates from systems I built</strong><span class="sub" id="groupSub">Tap to read them</span></span>
+      </button>
+      <div class="list" id="list"></div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <a class="btn primary" href="#work">See my work</a>
+    <a class="btn ghost" href="https://wa.me/393514930310" target="_blank" rel="noopener">Message me on WhatsApp</a>
+    <p class="note">These are the kinds of updates my clients' systems send every day. <button class="replay" id="replay" type="button">Replay</button></p>
+  </div>
+</section>
+
+<section class="day" id="work">
+  <div class="inner">
+    <h2>Morning in Messina.</h2>
+    <p>The night is over and the page turns light. This is where the project stories will start, each one opening from a card styled like the post it belongs to.</p>
+  </div>
+</section>
+</main>
+
+<script>
+(function(){
+  const ICONS = {
+    leaf:'<path d="M5 19c8 0 14-6 14-14-8 0-14 6-14 14z"/><path d="M5 19l7-7"/>',
+    box:'<path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/>',
+    cap:'<path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>',
+    page:'<path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7M9 7h4"/>',
+    tag:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/>',
+    send:'<path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/>',
+    shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>'
+  };
+  const APPS = {
+    nursery:{ name:'Raja Nursery', icon:'leaf', color:'#15803D' },
+    lab:{ name:'Ansh Color Lab', icon:'box', color:'#0F766E' },
+    skolar:{ name:'SKOLAR', icon:'cap', color:'#1E40AF' },
+    blog:{ name:'HeyBlog', icon:'page', color:'#334155' },
+    anand:{ name:'AnandPic', icon:'tag', color:'#B45309' },
+    outreach:{ name:'HeyGrowin Outreach', icon:'send', color:'#0E7490' },
+    loop:{ name:'RevenueLoop', icon:'shield', color:'#475569' }
+  };
+  const EVENTS = [
+    ['nursery','New online order','Someone just ordered plants from the website.'],
+    ['lab','Stock updated',"Today's sales are already in the inventory."],
+    ['skolar','New student enquiry','A student wants to study in Italy.'],
+    ['blog','Article published','Written, checked and published. Nobody touched it.'],
+    ['anand','Homepage updated','The owner changed the festive banner. No code needed.'],
+    ['nursery','Bill generated','Invoice ready at the counter.'],
+    ['outreach','Follow-up due','A business is waiting for a reply today.'],
+    ['skolar','Application moved forward','Documents complete. Next step unlocked.'],
+    ['nursery','Pots logged','Every pot that left today is tracked.'],
+    ['loop','Spend blocked','No money moves without a human yes.'],
+    ['lab','Stock updated','Evening sales synced.'],
+    ['blog','Duplicate caught','Too close to an older post, so it was skipped.'],
+    ['nursery','New online order','Another order from the website.'],
+    ['skolar','New student enquiry','A family is asking about Master\u2019s programmes.']
+  ];
+
+  const hero = document.getElementById('hero');
+  const feed = document.getElementById('feed');
+  const list = document.getElementById('list');
+  const groupBtn = document.getElementById('groupBtn');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Messina time on the lockscreen
+  function tick(){
+    const now = new Date();
+    const t = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Rome'}).format(now);
+    const d = new Intl.DateTimeFormat('en-GB',{weekday:'long',day:'numeric',month:'long',timeZone:'Europe/Rome'}).format(now);
+    document.getElementById('time').textContent = t;
+    document.getElementById('sbTime').textContent = t;
+    document.getElementById('date').textContent = d + ', Messina';
+  }
+  tick(); setInterval(tick, 15000);
+
+  const icon = (k, cls) => `<span class="${cls||'ico'}" style="background:${APPS[k].color}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[APPS[k].icon]}</svg></span>`;
+
+  // readable list for the expanded group
+  list.innerHTML = EVENTS.slice().reverse().map(([k,t,b]) =>
+    `<div class="row">${icon(k)}<div><b>${APPS[k].name}</b> ${t}. ${b}</div></div>`).join('');
+  document.getElementById('groupTitle').textContent = `${EVENTS.length} updates from systems I built`;
+
+  let cards = [], timers = [];
+
+  function layout(){
+    const gap = 8; let y = 0, bottom3 = 0;
+    cards.forEach((el, i) => {
+      const h = el.offsetHeight;
+      if (i < 3){
+        el.style.transform = `translateY(${y}px) scale(1)`;
+        el.style.opacity = 1; el.classList.remove('stacked');
+        y += h + gap; bottom3 = y - gap;
+      } else {
+        const d = i - 2;
+        const s = 1 - d * 0.05;
+        el.style.transform = `translateY(${bottom3 - h + d * 9}px) scale(${s})`;
+        el.style.opacity = Math.max(0, 1 - d * 0.32); el.classList.add('stacked');
+      }
+      el.style.zIndex = 100 - i;
+    });
+    cards.slice(6).forEach(el => el.remove());
+    cards = cards.slice(0, 6);
+  }
+
+  function push([k,t,b]){
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.innerHTML = `${icon(k)}<span class="app">${APPS[k].name}</span><span class="when">now</span><div class="msg"><b>${t}</b>${b}</div>`;
+    el.style.transform = 'translateY(-30px) scale(.94)';
+    el.style.opacity = '0';
+    feed.prepend(el);
+    cards.unshift(el);
+    el.offsetHeight; // commit start position
+    layout();
+  }
+
+  function finish(){
+    timers.forEach(clearTimeout); timers = [];
+    hero.classList.add('done');
+    document.getElementById('skip').style.visibility = 'hidden';
+    setTimeout(() => { cards.forEach(c => c.remove()); cards = []; }, 700);
+  }
+
+  function play(){
+    hero.classList.remove('done');
+    list.classList.remove('open'); groupBtn.setAttribute('aria-expanded','false'); document.getElementById('groupSub').textContent = 'Tap to read them';
+    document.getElementById('skip').style.visibility = 'visible';
+    cards.forEach(c => c.remove()); cards = [];
+    let t = 600, gap = 760;
+    EVENTS.forEach((e, i) => {
+      timers.push(setTimeout(() => push(e), t));
+      t += gap; gap = Math.max(120, gap * 0.8);
+    });
+    timers.push(setTimeout(finish, t + 650));
+  }
+
+  groupBtn.addEventListener('click', () => {
+    const open = list.classList.toggle('open');
+    groupBtn.setAttribute('aria-expanded', String(open));
+    document.getElementById('groupSub').textContent = open ? 'Tap to close' : 'Tap to read them';
+  });
+  document.getElementById('skip').addEventListener('click', finish);
+  document.getElementById('replay').addEventListener('click', play);
+
+  if (reduce) finish(); else play();
+})();
+</script>
+</body>
+</html>
