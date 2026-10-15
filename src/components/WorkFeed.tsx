@@ -85,6 +85,67 @@ export function ConceptBadge() {
   )
 }
 
+function ScrollRevealCard({
+  children,
+  onClick,
+  onKeyDown,
+  ariaLabel,
+}: {
+  children: React.ReactNode
+  onClick: () => void
+  onKeyDown: (e: React.KeyboardEvent) => void
+  ariaLabel: string
+}) {
+  const [isVisible, setIsVisible] = useState(false)
+  const cardRef = React.useRef<HTMLElement>(null)
+
+  React.useEffect(() => {
+    // If reduced motion is preferred, show immediately
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    if (prefersReducedMotion) {
+      setIsVisible(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    )
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <article
+      ref={cardRef}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-label={ariaLabel}
+      className={`group relative cursor-pointer text-left rounded-[22px] bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 shadow-md hover:shadow-2xl hover:border-teal-500/60 dark:hover:border-teal-500/60 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${
+        isVisible
+          ? 'opacity-100 translate-y-0 scale-100'
+          : 'opacity-0 translate-y-12 scale-[0.97]'
+      }`}
+    >
+      {children}
+    </article>
+  )
+}
+
 export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
   heading = 'Work',
   description = 'Real systems solving real problems for real people.',
@@ -107,11 +168,14 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
     <section id={anchorId} className="w-full py-16 sm:py-24 px-5 max-w-[680px] mx-auto">
       {/* Section Header */}
       <div className="mb-10 sm:mb-14">
-        <h2 className="text-[32px] sm:text-[40px] font-bold text-slate-900 dark:text-white tracking-[-0.03em] leading-tight m-0">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[12px] font-bold mb-3 uppercase tracking-wider">
+          Production Systems
+        </div>
+        <h2 className="text-[34px] sm:text-[44px] font-extrabold text-white tracking-[-0.03em] leading-tight m-0 drop-shadow-sm">
           {heading}
         </h2>
         {description && (
-          <p className="mt-2 text-[17px] text-slate-600 dark:text-slate-300 leading-relaxed max-w-[50ch]">
+          <p className="mt-2 text-[17px] text-slate-300 leading-relaxed max-w-[50ch] font-medium">
             {description}
           </p>
         )}
@@ -125,7 +189,7 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
           const initials = effectiveName.slice(0, 2).toUpperCase()
 
           return (
-            <article
+            <ScrollRevealCard
               key={project.id}
               onClick={() => onOpenStory(project)}
               onKeyDown={(e) => {
@@ -134,10 +198,7 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
                   onOpenStory(project)
                 }
               }}
-              tabIndex={0}
-              role="button"
-              aria-label={`View story for ${effectiveName}`}
-              className="group relative cursor-pointer text-left rounded-[22px] bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 shadow-md hover:shadow-2xl hover:border-teal-500/60 dark:hover:border-teal-500/60 transition-all duration-300 overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+              ariaLabel={`View story for ${effectiveName}`}
             >
               {/* ========================================================
                   STYLE 1: PHOTO-POST (Instagram aesthetic)
@@ -561,7 +622,7 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
                   </div>
                 </div>
               )}
-            </article>
+            </ScrollRevealCard>
           )
         })}
       </div>

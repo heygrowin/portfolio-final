@@ -33,9 +33,9 @@
     --surface: #0F172A;
     --brand: #10B981;
     --accent: #34D399;
-    --ink: #F1F5F9;
-    --text: #A8B3C4;
-    --muted: #64748B;
+    --ink: #FFFFFF;
+    --text: #CBD5E1;
+    --muted: #94A3B8;
     --line: #1E293B;
     color-scheme: dark;
   }
@@ -46,9 +46,9 @@
   --surface: #0F172A;
   --brand: #10B981;
   --accent: #34D399;
-  --ink: #F1F5F9;
-  --text: #A8B3C4;
-  --muted: #64748B;
+  --ink: #FFFFFF;
+  --text: #CBD5E1;
+  --muted: #94A3B8;
   --line: #1E293B;
   color-scheme: dark;
 }
