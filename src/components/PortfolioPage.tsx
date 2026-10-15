@@ -12,6 +12,7 @@ import { Cinema, CinemaProps } from './Cinema'
 import { Achievements, AchievementItemData } from './Achievements'
 import { Contact, ContactProps } from './Contact'
 import { Education } from './Education'
+import { Footer } from './Footer'
 import { FloatingNav, NavItem } from './FloatingNav'
 
 export interface PortfolioPageProps {
@@ -255,15 +256,8 @@ export function PortfolioPage({
         onSelectProject={handleOpenStory}
       />
 
-      {/* Footer */}
-      <footer className="w-full py-12 px-5 border-t border-[var(--line)] text-center text-[13px] text-[var(--muted)]">
-        <p className="m-0 mb-1">
-          Ansh Rajput · Messina, Italy · Built with Payload CMS & Next.js
-        </p>
-        <p className="m-0 text-[12px]">
-          Honest by design. Client names displayed only with verified permission.
-        </p>
-      </footer>
+      {/* Footer with All Social Profiles & Direct Channels */}
+      <Footer />
     </div>
   )
 }

@@ -77,24 +77,74 @@ export function Contact({
         </p>
       </div>
 
-      {/* Direct Contact Buttons */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-8">
+      {/* Direct Contact Buttons (Italy, India, Professional Email) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
         <a
-          href={whatsAppLink}
+          href="https://wa.me/393514930310"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2.5 min-h-[54px] px-6 rounded-[16px] text-[16px] font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition-all shadow-md hover:shadow-lg cursor-pointer"
+          className="flex items-center justify-between p-3.5 rounded-[16px] text-[14px] font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition-all shadow-md hover:shadow-lg cursor-pointer"
         >
+          <div className="flex items-center gap-2">
+            <span>🇮🇹</span>
+            <div className="text-left">
+              <span className="block text-[11px] uppercase tracking-wide opacity-80 leading-none">
+                WhatsApp (Italy)
+              </span>
+              <span className="text-[15px] font-black">+39 351 493 0310</span>
+            </div>
+          </div>
           <span>💬</span>
-          <span>Message on WhatsApp</span>
         </a>
 
         <a
-          href={`mailto:${email}?subject=Hello%20Ansh%20-%20From%20Portfolio`}
-          className="flex items-center justify-center gap-2.5 min-h-[54px] px-6 rounded-[16px] text-[16px] font-bold bg-white dark:bg-[#111827] text-slate-900 dark:text-white border border-slate-300 dark:border-slate-800 hover:border-teal-500 transition-all shadow-sm cursor-pointer"
+          href="https://wa.me/919111005300"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-between p-3.5 rounded-[16px] text-[14px] font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition-all shadow-md hover:shadow-lg cursor-pointer"
         >
+          <div className="flex items-center gap-2">
+            <span>🇮🇳</span>
+            <div className="text-left">
+              <span className="block text-[11px] uppercase tracking-wide opacity-80 leading-none">
+                WhatsApp (India)
+              </span>
+              <span className="text-[15px] font-black">+91 91110 05300</span>
+            </div>
+          </div>
+          <span>💬</span>
+        </a>
+
+        <a
+          href="mailto:heygrowteam@gmail.com?subject=Professional%20Inquiry%20-%20HeyGrowin"
+          className="flex items-center justify-between p-3.5 rounded-[16px] text-[14px] font-bold bg-white dark:bg-[#111827] text-slate-900 dark:text-white border border-slate-300 dark:border-slate-800 hover:border-teal-500 transition-all shadow-sm cursor-pointer"
+        >
+          <div className="flex items-center gap-2">
+            <span>💼</span>
+            <div className="text-left">
+              <span className="block text-[11px] uppercase tracking-wide text-teal-600 dark:text-teal-400 leading-none">
+                Professional Mail
+              </span>
+              <span className="text-[13px] font-bold">heygrowteam@gmail.com</span>
+            </div>
+          </div>
           <span>✉️</span>
-          <span>Open Email Client</span>
+        </a>
+
+        <a
+          href="mailto:anshr71t9@outlook.com?subject=Hello%20Ansh%20-%20From%20Portfolio"
+          className="flex items-center justify-between p-3.5 rounded-[16px] text-[14px] font-bold bg-white dark:bg-[#111827] text-slate-900 dark:text-white border border-slate-300 dark:border-slate-800 hover:border-teal-500 transition-all shadow-sm cursor-pointer"
+        >
+          <div className="flex items-center gap-2">
+            <span>👤</span>
+            <div className="text-left">
+              <span className="block text-[11px] uppercase tracking-wide text-blue-600 dark:text-blue-400 leading-none">
+                Direct / Academic
+              </span>
+              <span className="text-[13px] font-bold">anshr71t9@outlook.com</span>
+            </div>
+          </div>
+          <span>✉️</span>
         </a>
       </div>
 
