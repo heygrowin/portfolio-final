@@ -165,12 +165,12 @@ export function GrowthTimeline({
                 </span>
               </div>
 
-              {/* Card Container */}
+              {/* Card Container - starts dark black before scroll, turns bright white on scroll */}
               <div
                 className={`rounded-2xl p-5 sm:p-6 border transition-all duration-500 ${
                   isReached
-                    ? 'bg-gradient-to-br from-slate-900/95 via-emerald-950/20 to-slate-900/95 border-emerald-500/40 shadow-xl shadow-emerald-950/25'
-                    : 'bg-white dark:bg-[#111827] border-slate-200 dark:border-slate-800 shadow-sm'
+                    ? 'bg-white dark:bg-[#162032] text-slate-950 dark:text-white border-2 border-emerald-500/80 shadow-2xl shadow-emerald-500/15 scale-[1.01]'
+                    : 'bg-[#0B1220] border-slate-800/90 text-slate-400 shadow-sm'
                 }`}
               >
                 {/* Top Badges */}
@@ -178,8 +178,8 @@ export function GrowthTimeline({
                   <span
                     className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-extrabold uppercase tracking-wide border transition-colors ${
                       isReached
-                        ? 'bg-emerald-400 text-slate-950 border-emerald-300 shadow-xs'
-                        : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-300 border-slate-300 dark:border-slate-700'
+                        ? 'bg-emerald-500 text-white border-emerald-400 shadow-xs'
+                        : 'bg-slate-800/80 text-slate-400 border-slate-700/80'
                     }`}
                   >
                     {item.year}
@@ -200,12 +200,20 @@ export function GrowthTimeline({
                 </div>
 
                 {/* Milestone Title */}
-                <h3 className="text-[18px] sm:text-[21px] font-bold text-slate-900 dark:text-white leading-snug m-0">
+                <h3
+                  className={`text-[18px] sm:text-[21px] font-extrabold leading-snug m-0 transition-colors ${
+                    isReached ? 'text-slate-950 dark:text-white' : 'text-slate-400'
+                  }`}
+                >
                   {item.title}
                 </h3>
 
                 {/* Milestone Description */}
-                <p className="mt-2 text-[14px] sm:text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed m-0">
+                <p
+                  className={`mt-2 text-[14px] sm:text-[15px] leading-relaxed m-0 transition-colors ${
+                    isReached ? 'text-slate-700 dark:text-slate-200' : 'text-slate-500'
+                  }`}
+                >
                   {item.line}
                 </p>
 
@@ -215,7 +223,11 @@ export function GrowthTimeline({
                     {meta.tags.map((tag, tIdx) => (
                       <span
                         key={tIdx}
-                        className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800/60 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700/60"
+                        className={`text-[11px] font-medium px-2 py-0.5 rounded-md border transition-colors ${
+                          isReached
+                            ? 'bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700/80'
+                            : 'bg-slate-900/60 text-slate-500 border-slate-800'
+                        }`}
                       >
                         {tag}
                       </span>

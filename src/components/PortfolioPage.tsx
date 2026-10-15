@@ -11,6 +11,7 @@ import { AudienceTabs } from './AudienceTabs'
 import { Cinema, CinemaProps } from './Cinema'
 import { Achievements, AchievementItemData } from './Achievements'
 import { Contact, ContactProps } from './Contact'
+import { Education } from './Education'
 import { FloatingNav, NavItem } from './FloatingNav'
 
 export interface PortfolioPageProps {
@@ -202,6 +203,11 @@ export function PortfolioPage({
             anchorId="contact"
           />
         ),
+      },
+      {
+        id: 'education',
+        audiences: ['hire', 'client', 'build'],
+        component: <Education key="education" anchorId="education" />,
       },
     ]
 
