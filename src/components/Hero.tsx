@@ -41,7 +41,7 @@ interface CardState {
 
 export function Hero({
   name = 'Ansh Rajput',
-  tagline = 'I build the systems small businesses run on.',
+  tagline = 'Stop looking for the right developer. You just found one.',
   cityLabel = 'Messina',
   timezone = 'Europe/Rome',
   buttonWorkLabel = 'See my work',
@@ -238,12 +238,15 @@ export function Hero({
             {name}
           </h1>
 
-          <p className="mt-3 text-[17px] sm:text-[18px] font-semibold leading-[1.35] text-white max-w-[34ch] text-center">
-            {tagline}
-          </p>
-          <span className="mt-1 text-[13px] text-[rgba(241,245,249,0.7)] max-w-[38ch] text-center font-medium hidden sm:inline-block">
-            Autonomous workflows, real-time inventories, and zero-downtime platforms.
-          </span>
+          <div className="mt-3 flex flex-col items-center gap-1.5 text-center px-4">
+            <p className="text-[17px] sm:text-[19px] font-bold leading-[1.3] text-white max-w-[36ch] m-0 drop-shadow-sm">
+              {tagline}
+            </p>
+            <p className="text-[14px] sm:text-[15px] font-medium text-emerald-400/90 max-w-[36ch] m-0 flex items-center justify-center gap-1.5">
+              <span>Scroll down. Let the work speak.</span>
+              <span className="animate-bounce inline-block text-[12px]">↓</span>
+            </p>
+          </div>
         </div>
       </div>
 

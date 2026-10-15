@@ -181,7 +181,7 @@ export function PortfolioPage({
       },
       {
         id: 'achievements',
-        audiences: ['hire'],
+        audiences: ['hire', 'client', 'build'],
         component: (
           <Achievements
             key="achievements"

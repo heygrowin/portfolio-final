@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useMemo } from 'react'
 
 export interface TimelineItemData {
   id?: string
@@ -57,125 +57,6 @@ const milestoneMeta: Record<
   },
 }
 
-function TimelineCard({
-  item,
-  isCurrent,
-  index,
-}: {
-  item: TimelineItemData
-  isCurrent: boolean
-  index: number
-}) {
-  const [isVisible, setIsVisible] = useState(false)
-  const cardRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.15 }
-    )
-
-    if (cardRef.current) {
-      observer.observe(cardRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
-
-  const meta = milestoneMeta[item.year] || {
-    icon: '📌',
-    badge: 'Milestone',
-    badgeColor: 'border-slate-700 bg-slate-800/50 text-slate-300',
-    tags: [],
-  }
-
-  return (
-    <div
-      ref={cardRef}
-      className={`relative pl-8 sm:pl-10 transition-all duration-700 ease-out ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-      }`}
-      style={{ transitionDelay: `${index * 80}ms` }}
-    >
-      {/* Node Marker on vertical line */}
-      <div
-        className={`absolute -left-[17px] top-4 w-9 h-9 rounded-full flex items-center justify-center text-sm shadow-md transition-transform duration-300 ${
-          isCurrent
-            ? 'bg-teal-500 text-slate-950 ring-4 ring-teal-500/30 scale-110 shadow-teal-500/40'
-            : 'bg-slate-900 border-2 border-teal-500/60 text-white hover:scale-110'
-        }`}
-        aria-hidden="true"
-      >
-        <span>{meta.icon}</span>
-      </div>
-
-      {/* Card Content */}
-      <div
-        className={`rounded-2xl p-5 sm:p-6 border transition-all duration-300 ${
-          isCurrent
-            ? 'bg-gradient-to-br from-slate-900/95 via-teal-950/20 to-slate-900/95 border-teal-500/50 shadow-lg shadow-teal-950/40'
-            : 'bg-white dark:bg-[#111827] border-slate-200 dark:border-slate-800/90 hover:border-teal-500/40 shadow-sm hover:shadow-md'
-        }`}
-      >
-        {/* Top Badges */}
-        <div className="flex flex-wrap items-center gap-2 mb-3">
-          <span
-            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-extrabold uppercase tracking-wide border ${
-              isCurrent
-                ? 'bg-teal-400 text-slate-950 border-teal-300 shadow-xs'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border-slate-300 dark:border-slate-700'
-            }`}
-          >
-            {item.year}
-          </span>
-
-          <span
-            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${meta.badgeColor}`}
-          >
-            {meta.badge}
-          </span>
-
-          {isCurrent && (
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[11px] font-bold border border-emerald-500/30">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Active now
-            </span>
-          )}
-        </div>
-
-        {/* Milestone Title */}
-        <h3 className="text-[18px] sm:text-[21px] font-bold text-slate-900 dark:text-white leading-snug m-0">
-          {item.title}
-        </h3>
-
-        {/* Milestone Description */}
-        <p className="mt-2 text-[14px] sm:text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed m-0">
-          {item.line}
-        </p>
-
-        {/* Tags / Pills */}
-        {meta.tags && meta.tags.length > 0 && (
-          <div className="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex flex-wrap gap-1.5">
-            {meta.tags.map((tag, tIdx) => (
-              <span
-                key={tIdx}
-                className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800/60 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700/60"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
-
 export function GrowthTimeline({
   heading = 'Growth',
   items,
@@ -183,15 +64,48 @@ export function GrowthTimeline({
 }: GrowthTimelineProps) {
   if (!items || items.length === 0) return null
 
-  // Ensure items are ordered
-  const sortedItems = [...items].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+  // Ensure items are ordered by their order field
+  const sortedItems = useMemo(
+    () => [...items].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
+    [items]
+  )
+
+  const [activeStep, setActiveStep] = useState<number>(-1)
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  // Dynamic Scroll-Linked Active Marker
+  useEffect(() => {
+    const handleScroll = () => {
+      if (typeof window === 'undefined') return
+
+      // Trigger threshold line: 62% down the viewport
+      const triggerY = window.innerHeight * 0.62
+      let highestReached = -1
+
+      cardRefs.current.forEach((el, idx) => {
+        if (!el) return
+        const rect = el.getBoundingClientRect()
+        // If the card has scrolled up into the active viewing area
+        if (rect.top <= triggerY) {
+          highestReached = idx
+        }
+      })
+
+      setActiveStep(highestReached)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [sortedItems.length])
 
   return (
     <section id={anchorId} className="w-full py-16 sm:py-24 px-5 max-w-[680px] mx-auto">
       {/* Section Header */}
       <div className="mb-12 sm:mb-16">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/15 border border-teal-500/30 text-teal-400 text-[12px] font-bold mb-3 uppercase tracking-wider">
-          Trajectory & Milestones
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/15 border border-teal-500/30 text-teal-400 text-[12px] font-bold mb-3 uppercase tracking-wider shadow-sm">
+          <span>🚀</span>
+          <span>Trajectory & Milestones</span>
         </div>
         <h2 className="text-[34px] sm:text-[44px] font-extrabold text-white tracking-[-0.03em] leading-tight m-0 drop-shadow-sm">
           {heading}
@@ -202,22 +116,114 @@ export function GrowthTimeline({
       </div>
 
       {/* Vertical Spine Timeline */}
-      <div className="relative border-l-2 border-gradient-to-b from-teal-500 via-emerald-400 to-cyan-500 dark:border-slate-800 ml-4 space-y-9 sm:space-y-11">
-        {/* Luminous line overlay */}
+      <div className="relative border-l-2 border-slate-800 ml-4 space-y-10 sm:space-y-12">
+        {/* Dynamic Glowing Emerald Path */}
         <div
-          className="absolute top-0 bottom-0 -left-[2px] w-[3px] bg-gradient-to-b from-teal-400 via-emerald-400 to-cyan-500 opacity-80 shadow-[0_0_8px_rgba(45,212,191,0.5)] pointer-events-none"
+          className="absolute top-0 -left-[2px] w-[3px] bg-gradient-to-b from-emerald-400 via-teal-400 to-emerald-500 shadow-[0_0_14px_rgba(16,185,129,0.9)] transition-all duration-300 pointer-events-none"
+          style={{
+            height:
+              activeStep >= 0
+                ? `${Math.min(100, ((activeStep + 0.6) / sortedItems.length) * 100)}%`
+                : '0%',
+          }}
           aria-hidden="true"
         />
 
         {sortedItems.map((item, idx) => {
-          const isCurrent = item.year.toLowerCase() === 'now' || idx === sortedItems.length - 1
+          const isReached = idx <= activeStep
+          const isCurrentActive = idx === activeStep
+          const isNowMilestone = item.year.toLowerCase() === 'now'
+
+          const meta = milestoneMeta[item.year] || {
+            icon: '📌',
+            badge: 'Milestone',
+            badgeColor: 'border-slate-700 bg-slate-800/50 text-slate-300',
+            tags: [],
+          }
+
           return (
-            <TimelineCard
+            <div
               key={item.id || idx}
-              item={item}
-              isCurrent={isCurrent}
-              index={idx}
-            />
+              ref={(el) => {
+                cardRefs.current[idx] = el
+              }}
+              className={`relative pl-8 sm:pl-10 transition-all duration-500 ease-out ${
+                isReached ? 'opacity-100 translate-y-0' : 'opacity-60 translate-y-3'
+              }`}
+            >
+              {/* Left Spine Icon Node Marker */}
+              <div
+                className={`absolute -left-[18px] top-4 w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all duration-500 ${
+                  isReached
+                    ? 'bg-emerald-500 text-slate-950 ring-4 ring-emerald-400/50 shadow-[0_0_24px_rgba(16,185,129,0.95)] scale-120 border-2 border-emerald-300 font-extrabold z-10'
+                    : 'bg-slate-900 border-2 border-slate-700 text-slate-400 opacity-60 scale-95 z-0'
+                } ${isCurrentActive ? 'ring-8 ring-emerald-400/25' : ''}`}
+                aria-hidden="true"
+              >
+                <span className={isReached ? 'drop-shadow-sm scale-110' : ''}>
+                  {meta.icon}
+                </span>
+              </div>
+
+              {/* Card Container */}
+              <div
+                className={`rounded-2xl p-5 sm:p-6 border transition-all duration-500 ${
+                  isReached
+                    ? 'bg-gradient-to-br from-slate-900/95 via-emerald-950/20 to-slate-900/95 border-emerald-500/40 shadow-xl shadow-emerald-950/25'
+                    : 'bg-white dark:bg-[#111827] border-slate-200 dark:border-slate-800 shadow-sm'
+                }`}
+              >
+                {/* Top Badges */}
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[12px] font-extrabold uppercase tracking-wide border transition-colors ${
+                      isReached
+                        ? 'bg-emerald-400 text-slate-950 border-emerald-300 shadow-xs'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-300 border-slate-300 dark:border-slate-700'
+                    }`}
+                  >
+                    {item.year}
+                  </span>
+
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${meta.badgeColor}`}
+                  >
+                    {meta.badge}
+                  </span>
+
+                  {isNowMilestone && (
+                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold border border-emerald-500/40">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      Active now
+                    </span>
+                  )}
+                </div>
+
+                {/* Milestone Title */}
+                <h3 className="text-[18px] sm:text-[21px] font-bold text-slate-900 dark:text-white leading-snug m-0">
+                  {item.title}
+                </h3>
+
+                {/* Milestone Description */}
+                <p className="mt-2 text-[14px] sm:text-[15px] text-slate-600 dark:text-slate-300 leading-relaxed m-0">
+                  {item.line}
+                </p>
+
+                {/* Tags / Pills */}
+                {meta.tags && meta.tags.length > 0 && (
+                  <div className="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex flex-wrap gap-1.5">
+                    {meta.tags.map((tag, tIdx) => (
+                      <span
+                        key={tIdx}
+                        className="text-[11px] font-medium px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800/60 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700/60"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
           )
         })}
       </div>
