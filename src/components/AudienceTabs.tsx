@@ -62,7 +62,7 @@ export function AudienceTabs({
       <div
         role="tablist"
         aria-label="Audience filters"
-        className="flex p-1.5 rounded-[18px] bg-slate-900/80 border border-slate-800 gap-1.5 mb-8 backdrop-blur-md"
+        className="grid grid-cols-3 w-full p-1 sm:p-1.5 rounded-[18px] bg-slate-900/80 border border-slate-800 gap-1 sm:gap-1.5 mb-8 backdrop-blur-md"
       >
         {tabs.map((tab) => {
           const isActive = tab.key === activeAudience
@@ -73,14 +73,14 @@ export function AudienceTabs({
               aria-selected={isActive}
               type="button"
               onClick={() => onSelectAudience(tab.key)}
-              className={`flex-1 min-h-[46px] px-3.5 py-2 rounded-[14px] text-[14px] sm:text-[15px] font-bold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center gap-2 ${
+              className={`w-full min-h-[44px] px-1 sm:px-3 py-1.5 sm:py-2 rounded-[14px] text-[11.5px] xs:text-[12.5px] sm:text-[14.5px] font-bold transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 overflow-hidden ${
                 isActive
                   ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-slate-950 shadow-md font-extrabold'
                   : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
               }`}
             >
-              <span>{tab.icon}</span>
-              <span>{tab.label}</span>
+              <span className="text-[13px] sm:text-[15px] shrink-0">{tab.icon}</span>
+              <span className="truncate">{tab.label}</span>
             </button>
           )
         })}

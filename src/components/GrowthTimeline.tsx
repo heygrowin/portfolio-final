@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState, useMemo } from 'react'
+import { soundManager } from '../lib/audio'
 
 export interface TimelineItemData {
   id?: string
@@ -72,6 +73,7 @@ export function GrowthTimeline({
 
   const [activeStep, setActiveStep] = useState<number>(-1)
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
+  const lastPlayedStepRef = useRef<number>(-1)
 
   // Dynamic Scroll-Linked Active Marker
   useEffect(() => {
@@ -90,6 +92,12 @@ export function GrowthTimeline({
           highestReached = idx
         }
       })
+
+      // When a card turns completely white and blown up into view, play Sound 2 (public/2.mp3)
+      if (highestReached > lastPlayedStepRef.current && highestReached >= 0) {
+        lastPlayedStepRef.current = highestReached
+        soundManager.playSubsequentNotification()
+      }
 
       setActiveStep(highestReached)
     }

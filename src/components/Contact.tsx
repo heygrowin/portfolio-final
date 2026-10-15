@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { saveFirebaseInquiry } from '@/lib/firebaseDb'
 
 export interface ContactProps {
   activeAudience?: 'hire' | 'client' | 'build'
@@ -57,6 +58,17 @@ export function Contact({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    // Store inquiry in Firebase Firestore
+    try {
+      saveFirebaseInquiry({
+        name: formState.name,
+        email: formState.email,
+        message: formState.message,
+        audience: activeAudience || 'general',
+      }).catch(() => {})
+    } catch {
+      // ignore
+    }
     // Directly open default mail client
     window.location.href = dynamicMailto
     setStatus('sent')
