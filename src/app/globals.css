@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* HeyGrowin Brand Design Tokens (Light default) */
+  --bg: #FFFFFF;
+  --surface: #F8FAFC;
+  --brand: #0F766E;
+  --accent: #10B981;
+  --ink: #0F172A;
+  --text: #475569;
+  --muted: #64748B;
+  --line: #E2E8F0;
+
+  /* Night Palette (Hero and Cinema are always dark) */
+  --night-1: #0A2A2A;
+  --night-2: #0F172A;
+  --on-night: #F1F5F9;
+  --on-night-soft: rgba(241, 245, 249, 0.72);
+  --glass: rgba(255, 255, 255, 0.08);
+  --glass-line: rgba(255, 255, 255, 0.12);
+  --card-dark: rgba(24, 38, 52, 0.88);
+
+  color-scheme: light;
+  box-sizing: border-box;
+}
+
+/* Dark mode for the light sections (hero and cinema remain strictly dark) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1220;
+    --surface: #0F172A;
+    --brand: #10B981;
+    --accent: #34D399;
+    --ink: #F1F5F9;
+    --text: #A8B3C4;
+    --muted: #64748B;
+    --line: #1E293B;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0B1220;
+  --surface: #0F172A;
+  --brand: #10B981;
+  --accent: #34D399;
+  --ink: #F1F5F9;
+  --text: #A8B3C4;
+  --muted: #64748B;
+  --line: #1E293B;
+  color-scheme: dark;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ibm-plex), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* Accessibility: Visible Focus */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Pulse animation for Hero Group updates */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+  animation: pulseGlow 2.4s ease-out infinite;
+}
+
+/* Mobile-first tap targets */
+.tap-target {
+  min-height: 48px;
+  min-width: 48px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
