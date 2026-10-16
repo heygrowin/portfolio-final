@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useMemo } from 'react'
+import '../../globals.css'
 import {
   DEFAULT_PROJECTS,
   DEFAULT_TIMELINE,
@@ -12,7 +13,6 @@ import {
   saveFirebaseProject,
   deleteFirebaseProject,
   saveFirebaseTimelineItem,
-  deleteFirebaseTimelineItem,
   saveFirebaseSettings,
   seedAllToFirebase,
   getFirebaseInquiries,
@@ -41,7 +41,6 @@ export default function FirebaseAdminDashboard() {
   } | null>(null)
   const [isSyncing, setIsSyncing] = useState<boolean>(false)
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false)
 
   // Load from Firebase on Mount
   useEffect(() => {
@@ -175,7 +174,7 @@ export default function FirebaseAdminDashboard() {
 
     setProjects([newProj, ...projects])
     setSelectedProjectId(newId)
-    setIsNewProjectModalOpen(false)
+    setActiveTab('projects')
     showToast('✨ New project draft created! Configure it below.', 'info')
   }
 
@@ -219,23 +218,23 @@ export default function FirebaseAdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#070B14] text-slate-100 flex flex-col md:flex-row antialiased selection:bg-emerald-500 selection:text-slate-950">
+    <div className="min-h-screen bg-[#070B14] text-slate-100 flex flex-col md:flex-row antialiased selection:bg-emerald-500 selection:text-slate-950 font-sans">
       {/* Toast Notification Container */}
       {toastMessage && (
         <div
           role="alert"
           className={`fixed bottom-6 right-6 z-50 px-5 py-3.5 rounded-2xl shadow-2xl backdrop-blur-xl border flex items-center gap-3 animate-in slide-in-from-bottom-5 duration-300 text-sm font-bold ${
             toastMessage.type === 'success'
-              ? 'bg-emerald-950/90 text-emerald-300 border-emerald-500/50 shadow-emerald-500/20'
+              ? 'bg-emerald-950/95 text-emerald-300 border-emerald-500/50 shadow-emerald-500/20'
               : toastMessage.type === 'error'
-              ? 'bg-rose-950/90 text-rose-300 border-rose-500/50 shadow-rose-500/20'
-              : 'bg-slate-900/90 text-teal-300 border-teal-500/50 shadow-teal-500/20'
+              ? 'bg-rose-950/95 text-rose-300 border-rose-500/50 shadow-rose-500/20'
+              : 'bg-slate-900/95 text-teal-300 border-teal-500/50 shadow-teal-500/20'
           }`}
         >
           <span>{toastMessage.text}</span>
           <button
             onClick={() => setToastMessage(null)}
-            className="text-xs opacity-60 hover:opacity-100 ml-2"
+            className="text-xs opacity-60 hover:opacity-100 ml-2 cursor-pointer"
           >
             ✕
           </button>
@@ -264,7 +263,7 @@ export default function FirebaseAdminDashboard() {
           </div>
 
           {/* Navigation Links */}
-          <nav className="space-y-1">
+          <nav className="space-y-1.5">
             {[
               { id: 'overview' as const, label: 'Overview', icon: '📊' },
               { id: 'projects' as const, label: 'Projects & Privacy', icon: '💼', count: projects.length },
@@ -315,7 +314,7 @@ export default function FirebaseAdminDashboard() {
           >
             <span className="flex items-center gap-2">
               <span>🌐</span>
-              <span>View Public Portfolio</span>
+              <span>View Public Site</span>
             </span>
             <span className="text-slate-400">↗</span>
           </a>
@@ -326,7 +325,7 @@ export default function FirebaseAdminDashboard() {
             className="w-full py-2.5 px-3 rounded-xl bg-teal-500/15 hover:bg-teal-500 text-teal-300 hover:text-slate-950 border border-teal-500/30 flex items-center justify-center gap-2 text-xs font-extrabold transition-all cursor-pointer"
           >
             <span>{isSyncing ? '⏳' : '⚡'}</span>
-            <span>{isSyncing ? 'Syncing...' : 'Sync Firestore'}</span>
+            <span>{isSyncing ? 'Syncing...' : 'Sync to Firestore'}</span>
           </button>
 
           <div className="px-2 pt-2 text-[11px] font-mono text-slate-500">
@@ -340,7 +339,7 @@ export default function FirebaseAdminDashboard() {
           ======================================================== */}
       <main className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         {/* Top Header */}
-        <header className="px-6 sm:px-8 py-5 border-b border-slate-800/80 bg-[#0B1120]/70 backdrop-blur-md sticky top-0 z-40 flex flex-wrap items-center justify-between gap-4">
+        <header className="px-6 sm:px-8 py-5 border-b border-slate-800/80 bg-[#0B1120]/80 backdrop-blur-md sticky top-0 z-40 flex flex-wrap items-center justify-between gap-4">
           <div>
             <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight capitalize m-0">
               {activeTab === 'overview' && '📊 Dashboard Overview'}
@@ -351,7 +350,7 @@ export default function FirebaseAdminDashboard() {
               {activeTab === 'firestore' && '☁️ Cloud Firestore Status'}
             </h2>
             <p className="text-xs text-slate-400 mt-0.5">
-              Instant live editing connected directly to your Firebase Firestore database
+              Live configuration connected directly to your Firebase Firestore database
             </p>
           </div>
 
@@ -367,7 +366,7 @@ export default function FirebaseAdminDashboard() {
             )}
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300">
               <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              <span>Ansh Rajput</span>
+              <span>Ansh Rajput (Admin)</span>
             </div>
           </div>
         </header>
@@ -504,7 +503,7 @@ export default function FirebaseAdminDashboard() {
 
               {/* Master-Detail Projects View */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                {/* Left: Project Cards (4 cols) */}
+                {/* Left: Project Cards (5 cols) */}
                 <div className="lg:col-span-5 space-y-3">
                   {filteredProjects.map((proj) => {
                     const isSelected = selectedProject?.id === proj.id
