@@ -35,24 +35,24 @@ export default async function Page({ searchParams }: PageProps) {
     getFirebaseFacts(),
   ])
 
-  // 2. Notifications for Hero (Client Privacy aware)
+  // 2. Full set of 14 system notifications from the original prototype
   const heroNotifications: HeroNotificationItem[] = [
     {
-      appName: 'Plant Nursery',
+      appName: 'Raja Nursery',
       appIcon: 'leaf',
       appColor: '#15803D',
       title: 'New online order',
       body: 'Someone just ordered plants from the website.',
     },
     {
-      appName: 'Photo & Colour Lab',
+      appName: 'Ansh Color Lab',
       appIcon: 'box',
       appColor: '#0F766E',
       title: 'Stock updated',
       body: "Today's sales are already in the inventory.",
     },
     {
-      appName: 'Study Abroad Consultancy',
+      appName: 'SKOLAR',
       appIcon: 'cap',
       appColor: '#1E40AF',
       title: 'New student enquiry',
@@ -64,6 +64,76 @@ export default async function Page({ searchParams }: PageProps) {
       appColor: '#334155',
       title: 'Article published',
       body: 'Written, checked and published. Nobody touched it.',
+    },
+    {
+      appName: 'AnandPic',
+      appIcon: 'tag',
+      appColor: '#B45309',
+      title: 'Homepage updated',
+      body: 'The owner changed the festive banner. No code needed.',
+    },
+    {
+      appName: 'Raja Nursery',
+      appIcon: 'leaf',
+      appColor: '#15803D',
+      title: 'Bill generated',
+      body: 'Invoice ready at the counter.',
+    },
+    {
+      appName: 'HeyGrowin Outreach',
+      appIcon: 'send',
+      appColor: '#0E7490',
+      title: 'Follow-up due',
+      body: 'A business is waiting for a reply today.',
+    },
+    {
+      appName: 'SKOLAR',
+      appIcon: 'cap',
+      appColor: '#1E40AF',
+      title: 'Application moved forward',
+      body: 'Documents complete. Next step unlocked.',
+    },
+    {
+      appName: 'Raja Nursery',
+      appIcon: 'leaf',
+      appColor: '#15803D',
+      title: 'Pots logged',
+      body: 'Every pot that left today is tracked.',
+    },
+    {
+      appName: 'RevenueLoop',
+      appIcon: 'shield',
+      appColor: '#475569',
+      title: 'Spend blocked',
+      body: 'No money moves without a human yes.',
+    },
+    {
+      appName: 'Ansh Color Lab',
+      appIcon: 'box',
+      appColor: '#0F766E',
+      title: 'Stock updated',
+      body: 'Evening sales synced.',
+    },
+    {
+      appName: 'HeyBlog',
+      appIcon: 'page',
+      appColor: '#334155',
+      title: 'Duplicate caught',
+      body: 'Too close to an older post, so it was skipped.',
+    },
+    {
+      appName: 'Raja Nursery',
+      appIcon: 'leaf',
+      appColor: '#15803D',
+      title: 'New online order',
+      body: 'Another order from the website.',
+    },
+    {
+      appName: 'SKOLAR',
+      appIcon: 'cap',
+      appColor: '#1E40AF',
+      title: 'New student enquiry',
+      body: "A family is asking about Master's programmes.",
     },
   ]
 
