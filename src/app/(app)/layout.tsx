@@ -74,7 +74,7 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en" className={ibmPlexSans.variable}>
+    <html lang="en" className={ibmPlexSans.variable} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
