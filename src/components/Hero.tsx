@@ -72,6 +72,30 @@ export function Hero({
   const heroRef = useRef<HTMLElement>(null)
   const feedRef = useRef<HTMLDivElement>(null)
   const [isListOpen, setIsListOpen] = useState<boolean>(false)
+  const [isSoundActive, setIsSoundActive] = useState<boolean>(false)
+
+  useEffect(() => {
+    setIsSoundActive(soundManager.isUnlockedState())
+    const unsubscribe = soundManager.onUnlock((unlocked) => {
+      setIsSoundActive(unlocked)
+    })
+    return () => unsubscribe()
+  }, [])
+
+  const handleSoundToggle = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    soundManager.unlock()
+    soundManager.playFirstNotification()
+    setIsSoundActive(true)
+  }
+
+  const handleHeroClick = () => {
+    if (!isSoundActive) {
+      soundManager.unlock()
+      soundManager.playFirstNotification()
+      setIsSoundActive(true)
+    }
+  }
 
   useEffect(() => {
     const hero = heroRef.current
@@ -288,17 +312,36 @@ export function Hero({
         id="hero"
         aria-label="Introduction"
         className="hero"
+        onClick={handleHeroClick}
         data-state="intro"
         data-tz={timezone}
         data-city={cityLabel}
         data-locale={dateLocale}
         suppressHydrationWarning
       >
-        {/* Top Status Bar with real Messina time and Skip button */}
-        <div className="status">
+        {/* Top Status Bar with real Messina time, Sound toggle, and Skip button */}
+        <div className="status" onClick={(e) => e.stopPropagation()}>
           <span className="sb-time" aria-label={`Messina Time`} suppressHydrationWarning>
             --:--
           </span>
+          <button
+            type="button"
+            className="sound-toggle"
+            onClick={handleSoundToggle}
+            aria-label="Sound status"
+          >
+            {isSoundActive ? (
+              <>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Sound ON</span>
+              </>
+            ) : (
+              <>
+                <span>🔔</span>
+                <span>Enable Sound</span>
+              </>
+            )}
+          </button>
           <button type="button" className="skip">
             Skip
           </button>

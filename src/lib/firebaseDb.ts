@@ -34,15 +34,15 @@ export const DEFAULT_PROJECTS: FullProjectStory[] = [
     audiences: ['client', 'hire'],
     client: {
       clientName: 'Raja Nursery',
-      clientDescription: 'a family plant nursery',
-      clientPermission: false, // Hidden until verified
+      clientDescription: 'a family plant nursery in Bilaspur, India',
+      clientPermission: true,
     },
     postCard: {
       postStyle: 'photo-post',
-      postAuthorName: 'Plant Nursery',
+      postAuthorName: 'Raja Nursery',
       postHeadline: 'Family plant nursery digital transition',
       postText:
-        'Plants leaving the counter today are billed, inventoried, and tracked automatically. No paper slips lost.',
+        'Plants leaving the counter today in Bilaspur are billed, inventoried, and tracked automatically. No paper slips lost.',
       postTime: 'now',
     },
     atAGlance: {
@@ -59,7 +59,7 @@ export const DEFAULT_PROJECTS: FullProjectStory[] = [
     },
     story: {
       person:
-        'A hardworking family running a beloved local nursery, whose passion for plants deserved a modern system.',
+        'A hardworking family running a beloved local nursery in Bilaspur, India, whose passion for plants deserved a modern system.',
       struggle:
         'Counter sales were noted on paper pads, pot stock counts took hours after closing, and local plant lovers had no way to browse inventory online.',
       built:
@@ -67,7 +67,7 @@ export const DEFAULT_PROJECTS: FullProjectStory[] = [
       turningPoint:
         'The first Saturday rush where counter lines moved twice as fast and online pre-orders were ready for pickup without confusion.',
       today:
-        'Both the e-commerce store and internal counter software run daily, supported with same-day fixes whenever needed.',
+        'Both the e-commerce store and internal counter software run daily in Bilaspur, supported with same-day fixes whenever needed.',
     },
     tradeOffs: [
       {
@@ -89,13 +89,13 @@ export const DEFAULT_PROJECTS: FullProjectStory[] = [
     audiences: ['client', 'hire', 'build'],
     client: {
       clientName: 'Ansh Color Lab',
-      clientDescription: 'a high-volume photo & print studio',
-      clientPermission: false,
+      clientDescription: 'a high-volume photo & print studio in Bilaspur, India',
+      clientPermission: true,
     },
     postCard: {
-      postStyle: 'pro-post',
-      postAuthorName: 'Photo & Colour Lab',
-      postHeadline: 'Daily inventory synchronisation',
+      postStyle: 'team-message',
+      postAuthorName: 'Ansh Color Lab',
+      postHeadline: 'Daily inventory synchronisation in Bilaspur',
       postText:
         "Today's printing paper, ink cartridges, and chemical stocks reconciled before closing time.",
       postTime: '2h ago',
@@ -110,15 +110,15 @@ export const DEFAULT_PROJECTS: FullProjectStory[] = [
         { tag: 'Tailwind' },
       ],
       result:
-        'Eliminated stockout emergencies during peak wedding and portrait seasons.',
+        'Eliminated stockout emergencies during peak wedding and portrait seasons in Bilaspur.',
     },
     story: {
       person:
-        'The studio master craftsman who prints thousands of bespoke memories every week.',
+        'The studio master craftsman who prints thousands of bespoke memories every week in Bilaspur, India.',
       struggle:
         'Running out of premium photopaper on Friday evenings stopped print production until emergency reorders arrived.',
       built:
-        'A zero-bloat barcode inventory manager with predictive replenishment alerts.',
+        'A zero-bloat barcode inventory manager with predictive replenishment alerts and offline-first cache.',
       turningPoint:
         'The first busy holiday season with zero material stockouts and automated daily ledger reconciliations.',
       today:
@@ -127,7 +127,7 @@ export const DEFAULT_PROJECTS: FullProjectStory[] = [
     tradeOffs: [
       {
         point:
-          'Built lightweight local caching so counter staff can scan stock even during broadband fluctuations.',
+          'Built lightweight local caching so counter staff can scan stock even during broadband fluctuations in Bilaspur.',
       },
     ],
   },
@@ -145,14 +145,14 @@ export const DEFAULT_PROJECTS: FullProjectStory[] = [
     client: {
       clientName: 'SKOLAR',
       clientDescription: 'an overseas education consultancy',
-      clientPermission: false,
+      clientPermission: true,
     },
     postCard: {
-      postStyle: 'team-message',
-      postAuthorName: 'Study Abroad Consultancy',
-      postHeadline: 'Student admission pipeline active',
+      postStyle: 'pro-post',
+      postAuthorName: 'SKOLAR',
+      postHeadline: 'International Study Advisory · University Admissions in Italy & Europe',
       postText:
-        'Document verification completed for spring European university intakes.',
+        'Automated document verification and admissions pipeline active for European university intakes.',
       postTime: '4h ago',
     },
     atAGlance: {
@@ -169,7 +169,7 @@ export const DEFAULT_PROJECTS: FullProjectStory[] = [
     },
     story: {
       person:
-        'Consultants guiding international students through complex university admission criteria.',
+        'Consultants guiding international students through complex European university admission criteria.',
       struggle:
         'Lost emails, missing transcripts, and manual status tracking across WhatsApp chats.',
       built:
@@ -199,15 +199,15 @@ export const DEFAULT_PROJECTS: FullProjectStory[] = [
     audiences: ['build', 'hire'],
     client: {
       clientName: 'HeyBlog',
-      clientDescription: 'autonomous publishing platform',
-      clientPermission: false,
+      clientDescription: 'an autonomous markdown publishing & SEO platform',
+      clientPermission: true,
     },
     postCard: {
-      postStyle: 'photo-post',
-      postAuthorName: 'Autonomous Publishing Blog',
-      postHeadline: 'Content engine published automatically',
+      postStyle: 'thread',
+      postAuthorName: 'HeyBlog Automation',
+      postHeadline: 'Autonomous Markdown Publishing & Google Indexing Engine',
       postText:
-        'Structured markdown compiled, indexed, and deployed with zero manual intervention.',
+        'Structured markdown compiled, indexed, and deployed to Edge with zero manual intervention.',
       postTime: '1d ago',
     },
     atAGlance: {

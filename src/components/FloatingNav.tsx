@@ -109,16 +109,16 @@ export function FloatingNav({
       {/* 📱 Mobile: Ultra-sleek Floating Glass Island */}
       <nav
         aria-label="Mobile bottom navigation"
-        className="sm:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-40 max-w-[94vw] animate-in fade-in slide-in-from-bottom-6 duration-400 ease-out"
+        className="sm:hidden fixed bottom-3 left-1/2 -translate-x-1/2 z-40 w-auto max-w-[calc(100vw-16px)] animate-in fade-in slide-in-from-bottom-6 duration-400 ease-out"
       >
-        <div className="relative flex items-center gap-1 p-1.5 rounded-full bg-[#0F172A]/90 dark:bg-[#0B1220]/95 backdrop-blur-2xl border border-white/15 shadow-[0_12px_36px_rgba(0,0,0,0.45)]">
+        <div className="relative flex items-center justify-center gap-0.5 xs:gap-1 p-1 rounded-full bg-[#0F172A]/95 dark:bg-[#0B1220]/95 backdrop-blur-2xl border border-white/15 shadow-[0_12px_36px_rgba(0,0,0,0.55)]">
           {items.map((item) => {
             const isActive = activeSection === item.target
             return (
               <a
                 key={item.target}
                 href={item.target}
-                className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-full text-[13px] font-semibold transition-all duration-200 select-none ${
+                className={`relative flex items-center gap-1 px-2 xs:px-2.5 py-1.5 rounded-full text-[10.5px] xs:text-[11px] font-semibold transition-all duration-200 select-none whitespace-nowrap ${
                   isActive
                     ? 'text-white bg-[rgba(16,185,129,0.22)] border border-[rgba(16,185,129,0.4)] shadow-sm'
                     : 'text-slate-300 hover:text-white hover:bg-white/10'
@@ -136,9 +136,9 @@ export function FloatingNav({
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Direct message on WhatsApp"
-            className="w-8 h-8 rounded-full bg-[var(--accent)] hover:bg-[#34D399] text-[#04261C] grid place-items-center ml-0.5 flex-none transition-transform hover:scale-105 active:scale-95 shadow-sm"
+            className="w-6 h-6 xs:w-7 xs:h-7 rounded-full bg-[var(--accent)] hover:bg-[#34D399] text-[#04261C] grid place-items-center ml-0.5 flex-none transition-transform hover:scale-105 active:scale-95 shadow-sm"
           >
-            <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5 xs:w-4 xs:h-4 fill-current" viewBox="0 0 24 24">
               <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.302c-.087.087-.178.182-.077.355.101.173.449.741.964 1.201.662.591 1.221.774 1.394.861.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z" />
             </svg>
           </a>

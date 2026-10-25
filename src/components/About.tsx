@@ -20,6 +20,41 @@ export function About({
 }: AboutProps) {
   const [isDossierOpen, setIsDossierOpen] = useState(false)
 
+  const infoCards = [
+    {
+      num: '01',
+      title: 'IDEAS INTO PRODUCTS',
+      desc: 'I turn concepts into software people can actually use.',
+      accent: 'from-emerald-500/20 to-teal-500/5',
+      border: 'border-emerald-500/30',
+      numColor: 'text-emerald-400',
+    },
+    {
+      num: '02',
+      title: 'BEYOND THE CODE',
+      desc: 'I think about the problem, the people, and the solution.',
+      accent: 'from-blue-500/20 to-indigo-500/5',
+      border: 'border-blue-500/30',
+      numColor: 'text-blue-400',
+    },
+    {
+      num: '03',
+      title: 'ALWAYS EXPERIMENTING',
+      desc: 'I learn by building, testing, and improving.',
+      accent: 'from-amber-500/20 to-orange-500/5',
+      border: 'border-amber-500/30',
+      numColor: 'text-amber-400',
+    },
+    {
+      num: '04',
+      title: 'A GLOBAL PERSPECTIVE',
+      desc: 'Studying in Italy, building skills for a world without borders.',
+      accent: 'from-purple-500/20 to-pink-500/5',
+      border: 'border-purple-500/30',
+      numColor: 'text-purple-400',
+    },
+  ]
+
   return (
     <>
       <section
@@ -29,14 +64,14 @@ export function About({
         {/* Section Header */}
         <div className="mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[12px] font-bold mb-3 uppercase tracking-wider">
-            <span>Executive Dossier</span>
+            <span>EXECUTIVE DOSSIER</span>
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
           </div>
           <h2 className="text-[34px] sm:text-[44px] font-extrabold text-white tracking-[-0.03em] leading-tight m-0 drop-shadow-sm">
             About Ansh
           </h2>
-          <p className="mt-2 text-[17px] text-slate-300 leading-relaxed max-w-[52ch] font-medium">
-            The face and mind behind the systems. 19-year-old engineer in Messina, Italy, building software small businesses run on.
+          <p className="mt-2 text-[16px] sm:text-[17px] text-slate-300 leading-relaxed max-w-[54ch] font-medium">
+            The face and mind behind the systems. An independent developer and creative technologist building software, digital products, and solutions that turn ideas into reality.
           </p>
         </div>
 
@@ -45,7 +80,7 @@ export function About({
           {/* Subtle Ambient Emerald Glow */}
           <div className="absolute top-0 right-0 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-          {/* Top Row: Photo + Instant Summary */}
+          {/* Top Row: Photo + Core Identity */}
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-7">
             {/* Portrait Frame with Glow and Online Ring */}
             <div className="relative flex-none">
@@ -69,15 +104,15 @@ export function About({
               </div>
             </div>
 
-            {/* Core Identity Info */}
+            {/* Core Details */}
             <div className="flex-1 text-center sm:text-left">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
-                  <h3 className="text-[24px] sm:text-[26px] font-extrabold text-white leading-tight m-0">
+                  <h3 className="text-[24px] sm:text-[28px] font-extrabold text-white leading-tight m-0">
                     Ansh Rajput
                   </h3>
-                  <p className="text-[14px] text-emerald-400 font-semibold mt-0.5 m-0">
-                    Full-Stack Engineer & Founder @ HeyGrowin
+                  <p className="text-[13px] sm:text-[14px] text-emerald-400 font-semibold mt-1 m-0">
+                    Independent Developer · Freelancer · Creator
                   </p>
                 </div>
 
@@ -95,52 +130,58 @@ export function About({
                 </button>
               </div>
 
-              {/* Geo & Education Pill Row */}
-              <div className="mt-3.5 flex flex-wrap items-center justify-center sm:justify-start gap-2">
+              {/* Location & Education Badges */}
+              <div className="mt-3 flex flex-wrap items-center justify-center sm:justify-start gap-2">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[12px] font-medium text-slate-300">
                   <span>📍</span>
-                  <span>Messina, Sicily (CET) · Bilaspur, India</span>
+                  <span>Messina, Sicily, Italy · Originally from Bilaspur, India</span>
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[12px] font-medium text-slate-300">
                   <span>🎓</span>
-                  <span>BSc Data Analysis, Uni Messina</span>
+                  <span>BSc Data Analysis · University of Messina</span>
                 </span>
               </div>
 
-              {/* Short Bio */}
-              <p className="mt-3.5 text-[14px] sm:text-[15px] leading-relaxed text-slate-300/90 m-0 font-normal">
-                I don’t just write code; I take chaotic, paper-heavy operations and turn them into quiet, reliable software. Running production systems for 2+ years with zero silent failures.
-              </p>
+              {/* Personal Statement */}
+              <div className="mt-4 p-3.5 sm:p-4 rounded-xl bg-white/[0.04] border-l-4 border-emerald-400 text-left">
+                <p className="text-[14px] leading-relaxed text-slate-200 m-0 italic font-medium">
+                  &ldquo;I don&apos;t just write code; I think about the problem, the people, and the possibilities behind every product. I combine engineering, experimentation, and creative thinking to turn ideas into useful digital experiences.&rdquo;
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Key Metric Highlights Grid */}
-          <div className="mt-7 pt-6 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-            <div className="p-3 rounded-2xl bg-white/[0.04] border border-white/[0.08]">
-              <span className="block text-[22px] font-extrabold text-white leading-none">19</span>
-              <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mt-1 block">Years Old</span>
-            </div>
-            <div className="p-3 rounded-2xl bg-white/[0.04] border border-white/[0.08]">
-              <span className="block text-[22px] font-extrabold text-emerald-400 leading-none">2+ Yrs</span>
-              <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mt-1 block">Daily Production</span>
-            </div>
-            <div className="p-3 rounded-2xl bg-white/[0.04] border border-white/[0.08]">
-              <span className="block text-[22px] font-extrabold text-teal-400 leading-none">0</span>
-              <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mt-1 block">Quiet Failures</span>
-            </div>
-            <div className="p-3 rounded-2xl bg-white/[0.04] border border-white/[0.08]">
-              <span className="block text-[22px] font-extrabold text-amber-400 leading-none">AIR 275</span>
-              <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider mt-1 block">Cyber Olympiad</span>
+          {/* Four Information Cards (01 to 04) */}
+          <div className="mt-7 pt-6 border-t border-white/10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {infoCards.map((card) => (
+                <div
+                  key={card.num}
+                  className={`p-4 rounded-2xl bg-gradient-to-br ${card.accent} border ${card.border} backdrop-blur-md transition-transform hover:scale-[1.01]`}
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className={`text-[12px] font-black tracking-widest ${card.numColor}`}>
+                      {card.num}
+                    </span>
+                    <span className="text-[11px] font-bold tracking-wider text-slate-300 uppercase">
+                      {card.title}
+                    </span>
+                  </div>
+                  <p className="text-[13px] text-slate-200 m-0 leading-relaxed font-medium">
+                    {card.desc}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Quick Action Button Hub */}
+          {/* Buttons Hub */}
           <div className="mt-7 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-2.5">
               <a
                 href={cvModernUrl}
                 download
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--accent)] hover:bg-[#34D399] text-[#04261C] font-bold text-[13px] transition-all hover:scale-[1.02] active:scale-[0.98] shadow-sm"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--accent)] hover:bg-[#34D399] text-[#04261C] font-bold text-[13px] transition-all hover:scale-[1.02] active:scale-[0.98] shadow-sm"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
                   <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
@@ -151,9 +192,9 @@ export function About({
               <a
                 href={cvEuropassUrl}
                 download
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-[13px] transition-colors"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white font-semibold text-[13px] transition-colors"
               >
-                <span>🇪🇺 Europass CV</span>
+                <span>🇪🇺 EU Europass CV</span>
               </a>
             </div>
 
@@ -178,7 +219,7 @@ export function About({
       </section>
 
       {/* ========================================================
-          POPUP EXECUTIVE DOSSIER MODAL (The Quick Recruiter/Client View)
+          POPUP EXECUTIVE DOSSIER MODAL
           ======================================================== */}
       {isDossierOpen && (
         <div
@@ -214,51 +255,42 @@ export function About({
               </div>
               <div>
                 <span className="text-[11px] font-bold tracking-wider uppercase text-emerald-400">
-                  Candidate Dossier · High-Yield Summary
+                  EXECUTIVE DOSSIER ●
                 </span>
                 <h3 className="text-[22px] font-extrabold text-white m-0 leading-tight">
                   Ansh Rajput
                 </h3>
                 <p className="text-[13px] text-slate-400 m-0">
-                  Data Analysis Undergrad @ Uni Messina · Full-Stack Builder
+                  Independent Developer · Freelancer · Creator
                 </p>
               </div>
             </div>
 
             {/* Quick Summary Sections */}
-            <div className="space-y-4 text-[14px]">
+            <div className="space-y-3.5 text-[14px]">
               <div className="p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-                <strong className="text-emerald-300 block mb-1">🎯 What I Bring</strong>
+                <strong className="text-emerald-300 block mb-1">📍 Location & Education</strong>
                 <p className="text-slate-300 m-0 leading-relaxed text-[13px]">
-                  End-to-end full-stack craftsmanship. I bridge raw business problems with production software: Next.js, TypeScript, Firebase, Python pipelines, and clean relational databases.
+                  Messina, Sicily, Italy · Originally from Bilaspur, India<br />
+                  BSc Data Analysis · University of Messina
                 </p>
               </div>
 
               <div className="p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-                <strong className="text-teal-300 block mb-1">📍 Availability & Location</strong>
-                <p className="text-slate-300 m-0 leading-relaxed text-[13px]">
-                  Resident in Messina, Italy (CET timezone). Open for European software engineering / data internships (hybrid or remote) and high-impact client systems. Dual phone support (Italy & India).
+                <strong className="text-teal-300 block mb-1">🎯 Personal Statement</strong>
+                <p className="text-slate-300 m-0 leading-relaxed text-[13px] italic">
+                  &ldquo;I don&apos;t just write code; I think about the problem, the people, and the possibilities behind every product. I combine engineering, experimentation, and creative thinking to turn ideas into useful digital experiences.&rdquo;
                 </p>
               </div>
 
               <div className="p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-                <strong className="text-amber-300 block mb-1">⚡ Core Tech Arsenal</strong>
-                <div className="flex flex-wrap gap-1.5 mt-1.5">
-                  {['TypeScript', 'Next.js', 'React', 'Node.js', 'Firebase', 'Python', 'PostgreSQL', 'Tailwind CSS', 'System Design'].map((tech) => (
-                    <span key={tech} className="px-2.5 py-0.5 rounded-md bg-white/10 text-slate-200 text-[12px] font-medium">
-                      {tech}
-                    </span>
-                  ))}
+                <strong className="text-amber-300 block mb-1">⚡ Four Pillars</strong>
+                <div className="space-y-1.5 text-[12px] text-slate-300 mt-1">
+                  <div><strong>01:</strong> I turn concepts into software people can actually use.</div>
+                  <div><strong>02:</strong> I think about the problem, the people, and the solution.</div>
+                  <div><strong>03:</strong> I learn by building, testing, and improving.</div>
+                  <div><strong>04:</strong> Studying in Italy, building skills for a world without borders.</div>
                 </div>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-                <strong className="text-purple-300 block mb-1">🗣️ Languages</strong>
-                <p className="text-slate-300 m-0 leading-relaxed text-[13px]">
-                  • <strong>English:</strong> Professional Working & Fluent<br />
-                  • <strong>Italian:</strong> Elementary / In-country Immersion (Uni Messina)<br />
-                  • <strong>Hindi:</strong> Native
-                </p>
               </div>
             </div>
 
@@ -269,7 +301,7 @@ export function About({
                 download
                 className="flex-1 py-2.5 rounded-xl bg-[var(--accent)] hover:bg-[#34D399] text-[#04261C] font-bold text-[13px] text-center transition-colors"
               >
-                Download CV (1-Page)
+                Download CV (Modern)
               </a>
               <button
                 type="button"

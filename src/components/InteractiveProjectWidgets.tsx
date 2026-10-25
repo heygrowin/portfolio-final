@@ -162,11 +162,11 @@ export function RajaNurseryInteractive() {
                   After: HeyGrowin System
                 </span>
                 <p className="text-[13px] text-emerald-200/90 font-medium mt-2 leading-relaxed max-w-[26ch]">
-                  1-tap mobile register. Instant counter receipt. Pot inventory tracked automatically in real time.
+                  1-tap mobile register. Instant counter receipt. Pot inventory tracked automatically in Bilaspur, India.
                 </p>
               </div>
               <div className="text-[11px] text-emerald-400 font-mono font-bold">
-                ✔ 0 lost bills · Same-day support
+                ✔ 0 lost bills · Bilaspur, India
               </div>
             </div>
 
@@ -234,7 +234,7 @@ export function AnshColorLabInteractive() {
       <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10 text-[12px]">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-extrabold text-white">Live Barcode & Inventory Engine</span>
+          <span className="font-extrabold text-white">Ansh Color Lab · Barcode & Inventory Engine</span>
         </div>
 
         <button
@@ -249,7 +249,7 @@ export function AnshColorLabInteractive() {
       {showArch ? (
         /* Architecture Blueprint Flow */
         <div className="p-3.5 rounded-xl bg-black/60 border border-teal-500/30 text-[12px] space-y-2">
-          <div className="text-teal-400 font-bold uppercase tracking-wider text-[11px]">System Architecture</div>
+          <div className="text-teal-400 font-bold uppercase tracking-wider text-[11px]">System Architecture (Bilaspur, India)</div>
           <div className="flex flex-wrap items-center gap-1.5 text-slate-300 font-mono text-[11px]">
             <span className="px-2 py-1 rounded bg-white/10 text-white font-bold">Hardware Scanner</span>
             <span>&rarr;</span>
@@ -260,7 +260,7 @@ export function AnshColorLabInteractive() {
             <span className="px-2 py-1 rounded bg-amber-500/20 text-amber-300 font-bold">Replenishment Alert</span>
           </div>
           <p className="text-slate-400 text-[11px] m-0">
-            Engineered with zero-bloat local caching: counter staff can scan reels even during broadband drops without losing state.
+            Engineered with zero-bloat local caching: counter staff in Bilaspur can scan reels even during broadband drops without losing state.
           </p>
         </div>
       ) : (
@@ -309,7 +309,7 @@ export function AnshColorLabInteractive() {
                   {lastScanLog ? (
                     <span className="text-emerald-400 font-mono font-semibold">{lastScanLog}</span>
                   ) : (
-                    <span>Ready for real-time inventory reconciliation.</span>
+                    <span>Bilaspur, India · Ready for real-time inventory reconciliation.</span>
                   )}
                 </div>
               )}
@@ -364,9 +364,9 @@ export function SkolarInteractive() {
     >
       <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10 text-[12px]">
         <div className="flex items-center gap-2">
-          <span className="text-blue-400 font-extrabold">🎓 Automated Admission Intake Engine</span>
+          <span className="text-blue-400 font-extrabold">🎓 SKOLAR · Study Abroad Admission Engine</span>
         </div>
-        <span className="text-[11px] text-blue-300 font-semibold">Active European Pipeline</span>
+        <span className="text-[11px] text-blue-300 font-semibold">Messina, Italy & European Universities</span>
       </div>
 
       {/* Interactive Step Track */}
@@ -415,7 +415,100 @@ export function SkolarInteractive() {
 }
 
 // ========================================================
-// 4. WORK SECTION TOP METRICS BAR
+// 4. HEYBLOG AUTONOMOUS PUBLISHING & SEO ENGINE
+// ========================================================
+export function HeyBlogInteractive() {
+  const [isCompiling, setIsCompiling] = useState(false)
+  const [isPublished, setIsPublished] = useState(false)
+
+  const handlePublish = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (isCompiling) return
+    setIsCompiling(true)
+    soundManager.playSubsequentNotification()
+
+    setTimeout(() => {
+      setIsCompiling(false)
+      setIsPublished(true)
+      soundManager.playFirstNotification()
+    }, 450)
+  }
+
+  return (
+    <div
+      className="p-4 sm:p-5 bg-gradient-to-br from-slate-900 via-[#182234] to-slate-950 text-white rounded-2xl border border-indigo-500/30 shadow-inner select-none"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10 text-[12px]">
+        <div className="flex items-center gap-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-indigo-400 animate-pulse" />
+          <span className="font-extrabold text-white">HeyBlog · Autonomous Markdown Publishing Engine</span>
+        </div>
+        <span className="text-[11px] text-indigo-300 font-semibold">Zero Human Touch</span>
+      </div>
+
+      <div className="space-y-3">
+        {/* Pipeline Step Badges */}
+        <div className="grid grid-cols-3 gap-2 text-center text-[11px]">
+          <div className="p-2 rounded-xl bg-white/[0.04] border border-white/10">
+            <span className="text-indigo-400 font-bold block">1. Markdown</span>
+            <span className="text-slate-400 text-[10px]">Syntax & Frontmatter</span>
+          </div>
+          <div className="p-2 rounded-xl bg-white/[0.04] border border-white/10">
+            <span className="text-teal-400 font-bold block">2. Edge Deploy</span>
+            <span className="text-slate-400 text-[10px]">Static HTML in 28ms</span>
+          </div>
+          <div className="p-2 rounded-xl bg-white/[0.04] border border-white/10">
+            <span className="text-amber-400 font-bold block">3. Google Index</span>
+            <span className="text-slate-400 text-[10px]">Sitemap Auto-Ping</span>
+          </div>
+        </div>
+
+        {/* Live Simulation Output */}
+        <div className="p-3.5 rounded-xl bg-black/50 border border-indigo-500/30">
+          <div className="flex items-center justify-between text-[11px] mb-2">
+            <span className="text-slate-400 font-mono">FILE: autonomous-blog-pipeline.md</span>
+            <span className="text-emerald-400 font-bold font-mono">
+              STATUS: {isPublished ? 'INDEXED ON GOOGLE · #1 SERP' : 'WAITING FOR COMPILE'}
+            </span>
+          </div>
+
+          {/* Google Search Result Preview */}
+          <div className="p-3 rounded-lg bg-[#202124] text-left border border-white/10">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="w-4 h-4 rounded-full bg-white text-slate-900 grid place-items-center text-[10px] font-black">G</span>
+              <span className="text-[11px] text-slate-400">heygrow.in › blog › autonomous-publishing-engine</span>
+            </div>
+            <div className="text-[13px] font-bold text-[#8AB4F8] leading-tight">
+              Autonomous Content Engine: From Local Markdown to #1 Google Search Ranking
+            </div>
+            <p className="text-[11px] text-[#BDC1C6] mt-1 m-0 leading-relaxed line-clamp-2">
+              How an autonomous markdown pipeline running on an 8 GB Mac mini uses local LLMs, automated editorial scoring, and instant edge deployment to capture 300+ Google search rankings at zero API cost.
+            </p>
+          </div>
+        </div>
+
+        {/* Action Button */}
+        <div className="flex items-center justify-between pt-1">
+          <span className="text-[12px] text-slate-300 font-medium">
+            300+ organic impressions without manual SEO tuning.
+          </span>
+          <button
+            type="button"
+            onClick={handlePublish}
+            disabled={isCompiling}
+            className="px-4 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-400 active:scale-95 text-white text-[12px] font-extrabold transition-all cursor-pointer shadow-md shadow-indigo-950/50"
+          >
+            {isCompiling ? 'Compiling Markdown...' : '⚡ Trigger Autonomous Publish'}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ========================================================
+// 5. WORK SECTION TOP METRICS BAR
 // ========================================================
 export function WorkMetricsBar() {
   return (
@@ -439,3 +532,4 @@ export function WorkMetricsBar() {
     </div>
   )
 }
+

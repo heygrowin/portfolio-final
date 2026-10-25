@@ -10,6 +10,8 @@ class SoundManager {
   private pendingFirstSound: boolean = false
   private isUnlocked: boolean = false
 
+  private unlockListeners: Array<(unlocked: boolean) => void> = []
+
   constructor() {
     if (typeof window !== 'undefined') {
       // Clear any previous mute preferences - sounds must ALWAYS play
@@ -37,59 +39,137 @@ class SoundManager {
         // Fallback gracefully if Audio not supported
       }
 
-      // Proactive unlock on ANY user touch, click, scroll, key, or pointerdown
-      const unlock = () => {
-        if (this.isUnlocked) return
-        this.isUnlocked = true
-
-        try {
-          if (!this.audioCtx) {
-            const AudioContextClass =
-              window.AudioContext ||
-              (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
-            if (AudioContextClass) {
-              this.audioCtx = new AudioContextClass()
-            }
-          }
-          if (this.audioCtx && this.audioCtx.state === 'suspended') {
-            this.audioCtx.resume().catch(() => {})
-          }
-        } catch {
-          // ignore
-        }
-
-        try {
-          if (this.audio1) this.audio1.load()
-          if (this.audio2) this.audio2.load()
-          if (this.audio3) this.audio3.load()
-        } catch {
-          // ignore
-        }
-
-        // If the first notification arrived before user interaction, play it immediately now
-        if (this.pendingFirstSound) {
-          this.pendingFirstSound = false
-          this.playFirstNotification()
-        }
-
-        window.removeEventListener('pointerdown', unlock, true)
-        window.removeEventListener('touchstart', unlock, true)
-        window.removeEventListener('click', unlock, true)
-        window.removeEventListener('keydown', unlock, true)
-        window.removeEventListener('scroll', unlock, true)
-        window.removeEventListener('wheel', unlock, true)
-        window.removeEventListener('mousemove', unlock, true)
-        window.removeEventListener('pointermove', unlock, true)
+      const autoUnlock = () => {
+        this.unlock()
+        window.removeEventListener('pointerdown', autoUnlock, true)
+        window.removeEventListener('touchstart', autoUnlock, true)
+        window.removeEventListener('click', autoUnlock, true)
+        window.removeEventListener('keydown', autoUnlock, true)
+        window.removeEventListener('scroll', autoUnlock, true)
+        window.removeEventListener('wheel', autoUnlock, true)
+        window.removeEventListener('mousemove', autoUnlock, true)
+        window.removeEventListener('pointermove', autoUnlock, true)
       }
 
-      window.addEventListener('pointerdown', unlock, { capture: true, passive: true })
-      window.addEventListener('touchstart', unlock, { capture: true, passive: true })
-      window.addEventListener('click', unlock, { capture: true, passive: true })
-      window.addEventListener('keydown', unlock, { capture: true, passive: true })
-      window.addEventListener('scroll', unlock, { capture: true, passive: true })
-      window.addEventListener('wheel', unlock, { capture: true, passive: true })
-      window.addEventListener('mousemove', unlock, { capture: true, passive: true })
-      window.addEventListener('pointermove', unlock, { capture: true, passive: true })
+      window.addEventListener('pointerdown', autoUnlock, { capture: true, passive: true })
+      window.addEventListener('touchstart', autoUnlock, { capture: true, passive: true })
+      window.addEventListener('click', autoUnlock, { capture: true, passive: true })
+      window.addEventListener('keydown', autoUnlock, { capture: true, passive: true })
+      window.addEventListener('scroll', autoUnlock, { capture: true, passive: true })
+      window.addEventListener('wheel', autoUnlock, { capture: true, passive: true })
+      window.addEventListener('mousemove', autoUnlock, { capture: true, passive: true })
+      window.addEventListener('pointermove', autoUnlock, { capture: true, passive: true })
+    }
+  }
+
+  public onUnlock(listener: (unlocked: boolean) => void): () => void {
+    this.unlockListeners.push(listener)
+    if (this.isUnlocked) {
+      try {
+        listener(true)
+      } catch {
+        // ignore
+      }
+    }
+    return () => {
+      this.unlockListeners = this.unlockListeners.filter((l) => l !== listener)
+    }
+  }
+
+  public isUnlockedState(): boolean {
+    return this.isUnlocked
+  }
+
+  public unlock() {
+    if (this.isUnlocked) return
+    this.isUnlocked = true
+
+    try {
+      if (!this.audioCtx) {
+        const AudioContextClass =
+          window.AudioContext ||
+          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+        if (AudioContextClass) {
+          this.audioCtx = new AudioContextClass()
+        }
+      }
+      if (this.audioCtx && this.audioCtx.state === 'suspended') {
+        this.audioCtx.resume().catch(() => {})
+      }
+    } catch {
+      // ignore
+    }
+
+    try {
+      if (this.audio1) this.audio1.load()
+      if (this.audio2) this.audio2.load()
+      if (this.audio3) this.audio3.load()
+    } catch {
+      // ignore
+    }
+
+    // If a notification arrived before user interaction, play it immediately now
+    if (this.pendingFirstSound) {
+      this.pendingFirstSound = false
+      this.playFirstNotification()
+    }
+
+    this.unlockListeners.forEach((l) => {
+      try {
+        l(true)
+      } catch {
+        // ignore
+      }
+    })
+  }
+
+  // ========================================================
+  // WEB AUDIO SYNTHESIZED NOTIFICATION CHIME (Zero-latency fallback)
+  // ========================================================
+  public playSynthesizedChime(type: 'first' | 'subsequent' = 'subsequent') {
+    if (typeof window === 'undefined') return
+    try {
+      if (!this.audioCtx) {
+        const AudioContextClass =
+          window.AudioContext ||
+          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+        if (AudioContextClass) {
+          this.audioCtx = new AudioContextClass()
+        }
+      }
+      if (!this.audioCtx) return
+      if (this.audioCtx.state === 'suspended') {
+        this.audioCtx.resume().catch(() => {})
+      }
+
+      const now = this.audioCtx.currentTime
+      const osc = this.audioCtx.createOscillator()
+      const gain = this.audioCtx.createGain()
+
+      osc.type = 'sine'
+      if (type === 'first') {
+        // Elegant Apple-like two-stage chime (A5 -> E6)
+        osc.frequency.setValueAtTime(880, now)
+        osc.frequency.exponentialRampToValueAtTime(1318.5, now + 0.08)
+        gain.gain.setValueAtTime(0.35, now)
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45)
+        osc.connect(gain)
+        gain.connect(this.audioCtx.destination)
+        osc.start(now)
+        osc.stop(now + 0.46)
+      } else {
+        // Quick subtle glass chime (C6 -> G6)
+        osc.frequency.setValueAtTime(1046.5, now)
+        osc.frequency.exponentialRampToValueAtTime(1567.98, now + 0.05)
+        gain.gain.setValueAtTime(0.25, now)
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3)
+        osc.connect(gain)
+        gain.connect(this.audioCtx.destination)
+        osc.start(now)
+        osc.stop(now + 0.31)
+      }
+    } catch {
+      // Audio context error safety
     }
   }
 
@@ -107,9 +187,8 @@ class SoundManager {
         const promise = this.audio1.play()
         if (promise !== undefined) {
           promise.catch(() => {
-            // If browser autoplay policy blocked it because user hasn't interacted yet,
-            // mark it so the very first tap/scroll plays it instantly
             this.pendingFirstSound = true
+            this.playSynthesizedChime('first')
           })
         }
       } else {
@@ -117,17 +196,18 @@ class SoundManager {
         a.volume = 0.85
         a.play().catch(() => {
           this.pendingFirstSound = true
+          this.playSynthesizedChime('first')
         })
       }
     } catch {
       this.pendingFirstSound = true
+      this.playSynthesizedChime('first')
     }
   }
 
   // ========================================================
   // SOUND 2: FURTHER NOTIFICATIONS (public/2.mp3)
   // Plays on each subsequent notification in the hero animation
-  // Uses cloned audio nodes for crisp overlapping chimes
   // ========================================================
   public playSubsequentNotification() {
     if (typeof window === 'undefined') return
@@ -136,14 +216,21 @@ class SoundManager {
       if (this.audio2) {
         const clone = this.audio2.cloneNode(true) as HTMLAudioElement
         clone.volume = 0.75
-        clone.play().catch(() => {})
+        const promise = clone.play()
+        if (promise !== undefined) {
+          promise.catch(() => {
+            this.playSynthesizedChime('subsequent')
+          })
+        }
       } else {
         const a = new Audio('/2.mp3')
         a.volume = 0.75
-        a.play().catch(() => {})
+        a.play().catch(() => {
+          this.playSynthesizedChime('subsequent')
+        })
       }
     } catch {
-      // ignore
+      this.playSynthesizedChime('subsequent')
     }
   }
 

@@ -6,6 +6,7 @@ import {
   RajaNurseryInteractive,
   AnshColorLabInteractive,
   SkolarInteractive,
+  HeyBlogInteractive,
   WorkMetricsBar,
 } from './InteractiveProjectWidgets'
 
@@ -89,6 +90,26 @@ export function ConceptBadge() {
       Concept visual
     </span>
   )
+}
+
+function renderProjectInteractive(project: ProjectCardData) {
+  const slug = project.slug?.toLowerCase() || ''
+  const id = project.id?.toLowerCase() || ''
+  const title = project.title?.toLowerCase() || ''
+
+  if (slug.includes('nursery') || id.includes('nursery') || title.includes('nursery')) {
+    return <RajaNurseryInteractive />
+  }
+  if (slug.includes('color-lab') || id.includes('color-lab') || title.includes('color lab') || slug.includes('colour') || id.includes('colour')) {
+    return <AnshColorLabInteractive />
+  }
+  if (slug.includes('skolar') || id.includes('skolar') || title.includes('skolar')) {
+    return <SkolarInteractive />
+  }
+  if (slug.includes('heyblog') || id.includes('heyblog') || title.includes('heyblog') || slug.includes('blog') || title.includes('blog')) {
+    return <HeyBlogInteractive />
+  }
+  return null
 }
 
 function ScrollRevealCard({
@@ -231,7 +252,7 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
                           <span className="text-[12px] font-bold text-teal-600 dark:text-teal-400">Follow</span>
                         </div>
                         <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-tight mt-0.5">
-                          Messina, Italy · System in daily use
+                          Bilaspur, India · System in daily use
                         </span>
                       </div>
                     </div>
@@ -254,7 +275,7 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
                         />
                       </div>
                     ) : (
-                      <RajaNurseryInteractive />
+                      renderProjectInteractive(project) || <RajaNurseryInteractive />
                     )}
                     {postCard.postImageIsConcept && <ConceptBadge />}
                   </div>
@@ -469,6 +490,11 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
                         </p>
                       </div>
                     ))}
+                  </div>
+
+                  {/* Dedicated Interactive Simulator (e.g. HeyBlog Autonomous Publishing) */}
+                  <div className="mt-3 mb-2">
+                    {renderProjectInteractive(project) || <HeyBlogInteractive />}
                   </div>
 
                   {/* Twitter Action Row */}
