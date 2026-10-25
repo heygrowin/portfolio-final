@@ -366,7 +366,7 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
                         />
                       </div>
                     ) : (
-                      <SkolarInteractive />
+                      renderProjectInteractive(project) || <SkolarInteractive />
                     )}
                     {postCard.postImageIsConcept && <ConceptBadge />}
                   </div>
@@ -429,7 +429,7 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
 
                       {/* Slack Quote Accent Block -> Live Interactive Barcode Module */}
                       <div className="mb-3">
-                        <AnshColorLabInteractive />
+                        {renderProjectInteractive(project) || <AnshColorLabInteractive />}
                       </div>
 
                       {/* Slack Emoji Reaction Chips */}

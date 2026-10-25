@@ -145,15 +145,15 @@ export function StorySheet({
         style={{
           transform: touchDelta > 0 ? `translateY(${touchDelta}px)` : undefined,
         }}
-        className="w-full max-w-[760px] h-[92vh] sm:h-[88vh] max-h-[860px] bg-[var(--surface)] border border-[var(--line)] rounded-t-[28px] sm:rounded-[24px] shadow-2xl flex flex-col overflow-hidden text-[var(--ink)] animate-in slide-in-from-bottom-8 duration-300"
+        className="w-full max-w-[760px] h-[92vh] sm:h-[88vh] max-h-[860px] bg-[#0F172A] border border-slate-700/80 rounded-t-[28px] sm:rounded-[24px] shadow-2xl flex flex-col overflow-hidden text-white animate-in slide-in-from-bottom-8 duration-300"
       >
         {/* Grab Handle & Top Navigation Bar */}
-        <div className="flex-none pt-3 pb-2 px-5 flex flex-col items-center border-b border-[var(--line)]/60 bg-[var(--surface)] sticky top-0 z-20">
-          <div className="w-10 h-1.5 rounded-full bg-[var(--line)] mb-2.5 cursor-grab" aria-hidden="true" />
+        <div className="flex-none pt-3 pb-2 px-5 flex flex-col items-center border-b border-slate-800 bg-[#0F172A] sticky top-0 z-20">
+          <div className="w-10 h-1.5 rounded-full bg-slate-700 mb-2.5 cursor-grab" aria-hidden="true" />
           <div className="w-full flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <StatusPill status={project.status} />
-              <span className="text-[13px] font-medium text-[var(--muted)]">
+              <span className="text-[13px] font-semibold text-slate-400">
                 Project Story
               </span>
             </div>
@@ -162,7 +162,7 @@ export function StorySheet({
               type="button"
               onClick={onClose}
               aria-label="Close story sheet"
-              className="p-1.5 rounded-full hover:bg-[var(--line)]/60 text-[var(--muted)] hover:text-[var(--ink)] transition-colors cursor-pointer"
+              className="p-1.5 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -172,10 +172,10 @@ export function StorySheet({
         </div>
 
         {/* Scrollable Story Content Area */}
-        <div className="flex-1 overflow-y-auto px-5 sm:px-8 py-6 space-y-8">
+        <div className="flex-1 overflow-y-auto px-5 sm:px-8 py-6 space-y-8 bg-[#0F172A]">
           {/* 1. Hero Image of the Real Result */}
           {project.story?.heroImageUrl && (
-            <div className="relative w-full h-64 sm:h-80 rounded-[18px] overflow-hidden bg-[var(--line)]/40 border border-[var(--line)]">
+            <div className="relative w-full h-64 sm:h-80 rounded-[18px] overflow-hidden bg-slate-900 border border-slate-700/80">
               <Image
                 src={project.story.heroImageUrl}
                 alt={project.story.heroImageAlt || effectiveName}
@@ -191,40 +191,40 @@ export function StorySheet({
           <div>
             <h2
               id="story-sheet-title"
-              className="text-[28px] sm:text-[34px] font-bold text-[var(--ink)] tracking-[-0.03em] leading-tight m-0"
+              className="text-[28px] sm:text-[34px] font-extrabold text-white tracking-[-0.03em] leading-tight m-0"
             >
               {effectiveName}
             </h2>
-            <p className="mt-2 text-[17px] sm:text-[18px] text-[var(--text)] font-medium leading-relaxed">
+            <p className="mt-2 text-[16px] sm:text-[17px] text-slate-300 font-medium leading-relaxed">
               {project.oneLiner}
             </p>
           </div>
 
-          {/* 2. At A Glance Row: Role · Duration · Stack · Result (Recruiters scan this) */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-[16px] bg-white dark:bg-[#1E293B] border border-[var(--line)] text-[13px]">
+          {/* 2. At A Glance Row: Role · Duration · Stack · Result */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 sm:p-5 rounded-[18px] bg-slate-900/95 border border-slate-700/80 shadow-md text-[13px]">
             <div>
-              <span className="block text-[11px] font-semibold text-[var(--muted)] uppercase tracking-wider mb-0.5">
+              <span className="block text-[11px] font-bold text-emerald-400 uppercase tracking-wider mb-1">
                 Role
               </span>
-              <span className="font-medium text-[var(--ink)] leading-snug">
+              <span className="font-semibold text-white leading-snug">
                 {project.atAGlance?.role || 'Designed & built'}
               </span>
             </div>
 
             <div>
-              <span className="block text-[11px] font-semibold text-[var(--muted)] uppercase tracking-wider mb-0.5">
+              <span className="block text-[11px] font-bold text-emerald-400 uppercase tracking-wider mb-1">
                 Duration
               </span>
-              <span className="font-medium text-[var(--ink)] leading-snug">
+              <span className="font-semibold text-white leading-snug">
                 {project.atAGlance?.duration || 'In continuous use'}
               </span>
             </div>
 
             <div>
-              <span className="block text-[11px] font-semibold text-[var(--muted)] uppercase tracking-wider mb-0.5">
+              <span className="block text-[11px] font-bold text-emerald-400 uppercase tracking-wider mb-1">
                 Stack
               </span>
-              <span className="font-medium text-[var(--ink)] leading-snug">
+              <span className="font-semibold text-white leading-snug">
                 {project.atAGlance?.stack && project.atAGlance.stack.length > 0
                   ? project.atAGlance.stack.map((s) => s.tag).join(', ')
                   : 'Full-stack'}
@@ -232,10 +232,10 @@ export function StorySheet({
             </div>
 
             <div>
-              <span className="block text-[11px] font-semibold text-[var(--muted)] uppercase tracking-wider mb-0.5">
+              <span className="block text-[11px] font-bold text-emerald-400 uppercase tracking-wider mb-1">
                 Result
               </span>
-              <span className="font-medium text-[var(--ink)] leading-snug">
+              <span className="font-semibold text-white leading-snug">
                 {project.atAGlance?.result || 'Still in daily use'}
               </span>
             </div>
@@ -246,10 +246,10 @@ export function StorySheet({
             {/* Chapter 1: The person */}
             {project.story?.person && (
               <section className="space-y-1.5">
-                <h3 className="text-[14px] font-semibold text-[var(--brand)] uppercase tracking-wide m-0">
+                <h3 className="text-[13px] font-bold text-emerald-400 uppercase tracking-wider m-0">
                   The person
                 </h3>
-                <p className="text-[16px] leading-relaxed text-[var(--text)] m-0">
+                <p className="text-[15px] sm:text-[16px] leading-relaxed text-slate-200 m-0 font-normal">
                   {project.story.person}
                 </p>
               </section>
@@ -258,10 +258,10 @@ export function StorySheet({
             {/* Chapter 2: The struggle */}
             {project.story?.struggle && (
               <section className="space-y-1.5">
-                <h3 className="text-[14px] font-semibold text-[var(--brand)] uppercase tracking-wide m-0">
+                <h3 className="text-[13px] font-bold text-emerald-400 uppercase tracking-wider m-0">
                   The struggle
                 </h3>
-                <p className="text-[16px] leading-relaxed text-[var(--text)] m-0">
+                <p className="text-[15px] sm:text-[16px] leading-relaxed text-slate-200 m-0 font-normal">
                   {project.story.struggle}
                 </p>
               </section>
@@ -270,10 +270,10 @@ export function StorySheet({
             {/* Chapter 3: What I built */}
             {project.story?.built && (
               <section className="space-y-3">
-                <h3 className="text-[14px] font-semibold text-[var(--brand)] uppercase tracking-wide m-0">
+                <h3 className="text-[13px] font-bold text-emerald-400 uppercase tracking-wider m-0">
                   What I built
                 </h3>
-                <p className="text-[16px] leading-relaxed text-[var(--text)] m-0">
+                <p className="text-[15px] sm:text-[16px] leading-relaxed text-slate-200 m-0 font-normal">
                   {project.story.built}
                 </p>
 
@@ -283,7 +283,7 @@ export function StorySheet({
                     {project.gallery.map((img, gIdx) => (
                       <div
                         key={gIdx}
-                        className="relative rounded-[12px] overflow-hidden bg-[var(--line)] border border-[var(--line)] aspect-video"
+                        className="relative rounded-[14px] overflow-hidden bg-slate-900 border border-slate-700/80 aspect-video"
                       >
                         <Image
                           src={img.imageUrl}
@@ -293,7 +293,7 @@ export function StorySheet({
                         />
                         {img.isConcept && <ConceptBadge />}
                         {img.caption && (
-                          <div className="absolute inset-x-0 bottom-0 bg-black/60 backdrop-blur-sm p-1.5 text-center text-white text-[11px]">
+                          <div className="absolute inset-x-0 bottom-0 bg-black/75 backdrop-blur-sm p-2 text-center text-slate-200 text-[11px] font-medium">
                             {img.caption}
                           </div>
                         )}
@@ -307,10 +307,10 @@ export function StorySheet({
             {/* Chapter 4: The moment it changed */}
             {project.story?.turningPoint && (
               <section className="space-y-1.5">
-                <h3 className="text-[14px] font-semibold text-[var(--brand)] uppercase tracking-wide m-0">
+                <h3 className="text-[13px] font-bold text-emerald-400 uppercase tracking-wider m-0">
                   The moment it changed
                 </h3>
-                <p className="text-[16px] leading-relaxed text-[var(--text)] m-0">
+                <p className="text-[15px] sm:text-[16px] leading-relaxed text-slate-200 m-0 font-normal">
                   {project.story.turningPoint}
                 </p>
               </section>
@@ -319,19 +319,19 @@ export function StorySheet({
             {/* Chapter 5: Today */}
             {project.story?.today && (
               <section className="space-y-3">
-                <h3 className="text-[14px] font-semibold text-[var(--brand)] uppercase tracking-wide m-0">
+                <h3 className="text-[13px] font-bold text-emerald-400 uppercase tracking-wider m-0">
                   Today
                 </h3>
-                <p className="text-[16px] leading-relaxed text-[var(--text)] m-0">
+                <p className="text-[15px] sm:text-[16px] leading-relaxed text-slate-200 m-0 font-normal">
                   {project.story.today}
                 </p>
 
                 {/* Customer quote (strictly conditional on quotePermission) */}
                 {showQuote && (
-                  <blockquote className="my-4 border-l-2 border-[var(--brand)] pl-4 py-2 bg-white dark:bg-[#1E293B] rounded-r-[12px] text-[15px] italic text-[var(--ink)]">
+                  <blockquote className="my-4 border-l-4 border-emerald-500 pl-4 py-3 bg-slate-900/80 rounded-r-[14px] text-[15px] italic text-slate-100">
                     &ldquo;{project.quote?.quoteText}&rdquo;
                     {project.quote?.quoteName && (
-                      <cite className="block text-[13px] font-semibold not-italic text-[var(--muted)] mt-1">
+                      <cite className="block text-[13px] font-semibold not-italic text-emerald-400 mt-1.5">
                         — {project.quote.quoteName}
                       </cite>
                     )}
@@ -343,11 +343,11 @@ export function StorySheet({
 
           {/* 4. Trade-offs I made */}
           {project.tradeOffs && project.tradeOffs.length > 0 && (
-            <div className="p-4 rounded-[16px] bg-white dark:bg-[#1E293B] border border-[var(--line)]">
-              <h4 className="text-[14px] font-semibold text-[var(--ink)] uppercase tracking-wide m-0 mb-2">
+            <div className="p-4 sm:p-5 rounded-[18px] bg-slate-900/95 border border-slate-700/80">
+              <h4 className="text-[13px] font-bold text-emerald-400 uppercase tracking-wider m-0 mb-2.5">
                 Trade-offs I made
               </h4>
-              <ul className="list-disc pl-5 space-y-1.5 text-[15px] text-[var(--text)] m-0">
+              <ul className="list-disc pl-5 space-y-1.5 text-[14px] sm:text-[15px] text-slate-200 m-0">
                 {project.tradeOffs.map((to, toIdx) => (
                   <li key={toIdx}>{to.point}</li>
                 ))}
@@ -364,7 +364,7 @@ export function StorySheet({
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[14px] font-medium bg-[var(--brand)] text-white hover:bg-[var(--brand)]/90 transition-colors shadow-sm"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition-colors shadow-sm"
                 >
                   <span>{link.label}</span>
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -377,14 +377,14 @@ export function StorySheet({
 
           {/* 6. Next Story Button */}
           {allProjects.length > 1 && (
-            <div className="pt-4 pb-2 border-t border-[var(--line)]/60 flex justify-between items-center">
-              <span className="text-[13px] text-[var(--muted)]">
+            <div className="pt-4 pb-2 border-t border-slate-800 flex justify-between items-center">
+              <span className="text-[13px] text-slate-400">
                 Interested in other systems?
               </span>
               <button
                 type="button"
                 onClick={handleNextStory}
-                className="px-5 py-2.5 rounded-full text-[14px] font-semibold bg-[var(--surface)] hover:bg-[var(--line)]/60 text-[var(--ink)] border border-[var(--line)] transition-colors cursor-pointer"
+                className="px-5 py-2.5 rounded-full text-[13px] font-bold bg-slate-800 hover:bg-slate-700 text-white border border-slate-600 transition-colors cursor-pointer shadow-sm"
               >
                 Next story &rarr;
               </button>
