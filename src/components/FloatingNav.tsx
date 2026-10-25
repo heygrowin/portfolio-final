@@ -72,7 +72,15 @@ export function FloatingNav({
         </svg>
       )
     }
-    if (l.includes('about') || l.includes('growth') || l.includes('timeline')) {
+    if (l.includes('about')) {
+      return (
+        <svg className={`w-4 h-4 ${strokeClass}`} viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+      )
+    }
+    if (l.includes('growth') || l.includes('timeline')) {
       return (
         <svg className={`w-4 h-4 ${strokeClass}`} viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { Hero, HeroProps } from './Hero'
 import { NightToDay } from './NightToDay'
 import { ThreeFacts, FactItem } from './ThreeFacts'
+import { About } from './About'
 import { WorkFeed, ProjectCardData, getEffectiveSlug } from './WorkFeed'
 import { StorySheet, FullProjectStory } from './StorySheet'
 import { GrowthTimeline, TimelineItemData } from './GrowthTimeline'
@@ -133,6 +134,20 @@ export function PortfolioPage({
         id: 'facts',
         audiences: ['hire', 'client', 'build'],
         component: <ThreeFacts key="facts" facts={facts} anchorId="facts" />,
+      },
+      {
+        id: 'about',
+        audiences: ['hire', 'client', 'build'],
+        component: (
+          <About
+            key="about"
+            anchorId="about"
+            cvModernUrl={contact.cvModernUrl}
+            cvEuropassUrl={contact.cvEuropassUrl}
+            whatsAppLink={contact.whatsAppLink}
+            email={contact.email}
+          />
+        ),
       },
       {
         id: 'work',

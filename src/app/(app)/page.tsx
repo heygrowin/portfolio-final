@@ -201,6 +201,7 @@ export default async function Page({ searchParams }: PageProps) {
   }
 
   const navItems = [
+    { label: 'About', target: '#about' },
     { label: 'Work', target: '#work' },
     { label: 'Growth', target: '#timeline' },
     { label: 'Contact', target: '#contact' },

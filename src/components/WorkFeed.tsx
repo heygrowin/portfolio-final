@@ -2,6 +2,12 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
+import {
+  RajaNurseryInteractive,
+  AnshColorLabInteractive,
+  SkolarInteractive,
+  WorkMetricsBar,
+} from './InteractiveProjectWidgets'
 
 export interface ProjectCardData {
   id: string
@@ -181,6 +187,9 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
         )}
       </div>
 
+      {/* Visual Proof-of-Work Metrics Bar */}
+      <WorkMetricsBar />
+
       {/* Feed of Project Posts */}
       <div className="flex flex-col gap-9 sm:gap-11">
         {visibleProjects.map((project) => {
@@ -233,27 +242,19 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
                     </div>
                   </div>
 
-                  {/* Photo Visual Frame */}
-                  <div className="relative w-full aspect-[4/3] sm:aspect-square bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950 overflow-hidden flex items-center justify-center">
+                  {/* Photo Visual Frame -> Live Interactive POS or Real Image */}
+                  <div className="relative w-full overflow-hidden bg-slate-950">
                     {postCard.postImageUrl ? (
-                      <Image
-                        src={postCard.postImageUrl}
-                        alt={postCard.postImageAlt || effectiveName}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                      />
-                    ) : (
-                      <div className="text-center p-6 text-white/95">
-                        <span className="w-14 h-14 rounded-2xl bg-emerald-500/25 text-emerald-300 grid place-items-center mx-auto mb-3 border border-emerald-500/40 text-2xl shadow-lg">
-                          🌱
-                        </span>
-                        <p className="font-bold text-[18px] text-white m-0">
-                          {effectiveName}
-                        </p>
-                        <p className="text-[13px] text-slate-300 mt-1.5 max-w-[34ch] font-medium">
-                          Custom online store & live counter pot tracking
-                        </p>
+                      <div className="relative w-full aspect-[4/3] sm:aspect-square">
+                        <Image
+                          src={postCard.postImageUrl}
+                          alt={postCard.postImageAlt || effectiveName}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        />
                       </div>
+                    ) : (
+                      <RajaNurseryInteractive />
                     )}
                     {postCard.postImageIsConcept && <ConceptBadge />}
                   </div>
@@ -328,7 +329,7 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
                     {postCard.postText || project.oneLiner}
                   </p>
 
-                  {/* Attached Media / Card Preview */}
+                  {/* Attached Media / Card Preview -> Live Interactive Student Pipeline */}
                   <div className="rounded-[14px] overflow-hidden border border-slate-200 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-800/40 relative mb-3">
                     {postCard.postImageUrl ? (
                       <div className="relative w-full aspect-video">
@@ -340,18 +341,7 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
                         />
                       </div>
                     ) : (
-                      <div className="p-5 bg-gradient-to-r from-blue-900/15 via-slate-900/5 to-teal-900/15">
-                        <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-[13px] mb-1">
-                          <span>🎓</span>
-                          <span>Student Portal & Workflow System</span>
-                        </div>
-                        <h4 className="text-[16px] font-bold text-slate-900 dark:text-white m-0">
-                          {effectiveName}
-                        </h4>
-                        <p className="text-[13px] text-slate-600 dark:text-slate-300 mt-1 m-0">
-                          Automated document management pipeline for Bachelor’s and Master’s applicants.
-                        </p>
-                      </div>
+                      <SkolarInteractive />
                     )}
                     {postCard.postImageIsConcept && <ConceptBadge />}
                   </div>
@@ -412,12 +402,9 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
                         {postCard.postText || project.oneLiner}
                       </p>
 
-                      {/* Slack Quote Accent Block */}
-                      <div className="border-l-4 border-[var(--brand)] bg-slate-50 dark:bg-slate-800/60 p-3 rounded-r-lg text-[13px] mb-3">
-                        <div className="font-bold text-slate-900 dark:text-white mb-0.5">
-                          Daily Reconciliation Status
-                        </div>
-                        <div className="text-slate-600 dark:text-slate-300">Continuous 2+ years daily inventory tracking · Zero stockouts</div>
+                      {/* Slack Quote Accent Block -> Live Interactive Barcode Module */}
+                      <div className="mb-3">
+                        <AnshColorLabInteractive />
                       </div>
 
                       {/* Slack Emoji Reaction Chips */}
