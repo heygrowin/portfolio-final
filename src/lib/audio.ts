@@ -78,6 +78,8 @@ class SoundManager {
         window.removeEventListener('keydown', unlock, true)
         window.removeEventListener('scroll', unlock, true)
         window.removeEventListener('wheel', unlock, true)
+        window.removeEventListener('mousemove', unlock, true)
+        window.removeEventListener('pointermove', unlock, true)
       }
 
       window.addEventListener('pointerdown', unlock, { capture: true, passive: true })
@@ -86,6 +88,8 @@ class SoundManager {
       window.addEventListener('keydown', unlock, { capture: true, passive: true })
       window.addEventListener('scroll', unlock, { capture: true, passive: true })
       window.addEventListener('wheel', unlock, { capture: true, passive: true })
+      window.addEventListener('mousemove', unlock, { capture: true, passive: true })
+      window.addEventListener('pointermove', unlock, { capture: true, passive: true })
     }
   }
 

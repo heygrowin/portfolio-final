@@ -200,7 +200,7 @@ export function Hero({
       if (onHeroComplete) onHeroComplete()
 
       try {
-        localStorage.setItem(SEEN_KEY, '1')
+        localStorage.removeItem(SEEN_KEY)
       } catch {
         // Private mode safety
       }
@@ -255,12 +255,17 @@ export function Hero({
     visibility.observe(hero)
 
     // Check if initial intro should play
-    if (hero.dataset.state === 'intro') {
-      const bootedAt = Number(hero.dataset.boot) || performance.now()
-      play(Math.min(performance.now() - bootedAt, FIRST_CARD_DELAY))
+    const reduce =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const hasHash =
+      typeof window !== 'undefined' &&
+      window.location.hash.replace('#', '') !== ''
+
+    if (reduce || hasHash) {
+      finish()
     } else {
-      html.dataset.hero = 'done'
-      if (onHeroComplete) onHeroComplete()
+      play(0)
     }
 
     return () => {
@@ -283,7 +288,7 @@ export function Hero({
         id="hero"
         aria-label="Introduction"
         className="hero"
-        data-state="done"
+        data-state="intro"
         data-tz={timezone}
         data-city={cityLabel}
         data-locale={dateLocale}
@@ -420,11 +425,14 @@ export function Hero({
         dangerouslySetInnerHTML={{
           __html: `(function(){
 var h=document.getElementById('hero');if(!h)return;
-var seen=false;try{seen=localStorage.getItem('${SEEN_KEY}')==='1'}catch(e){}
+try{localStorage.removeItem('${SEEN_KEY}');}catch(e){}
 var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(!seen&&!reduce&&location.hash.replace('#','')===''){
+var hasHash=location.hash.replace('#','')!=='';
+if(reduce||hasHash){
+  h.setAttribute('data-state','done');
+  document.documentElement.setAttribute('data-hero','done');
+}else{
   h.setAttribute('data-state','intro');
-  h.setAttribute('data-boot',String(Math.round(performance.now())));
   document.documentElement.setAttribute('data-hero','playing');
 }
 try{
