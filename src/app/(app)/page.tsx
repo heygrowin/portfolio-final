@@ -66,6 +66,13 @@ export default async function Page({ searchParams }: PageProps) {
       body: 'Written, checked and published. Nobody touched it.',
     },
     {
+      appName: 'GitaQuest',
+      appIcon: 'page',
+      appColor: '#D97706',
+      title: 'Daily reading goal reached',
+      body: 'Chapter 2 completed. Progress synced locally.',
+    },
+    {
       appName: 'AnandPic',
       appIcon: 'tag',
       appColor: '#B45309',

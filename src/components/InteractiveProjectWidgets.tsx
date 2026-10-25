@@ -533,3 +533,174 @@ export function WorkMetricsBar() {
   )
 }
 
+// ========================================================
+// 6. GITAQUEST MULTILINGUAL READING & PROGRESS SIMULATOR
+// ========================================================
+export function GitaQuestInteractive() {
+  const [lang, setLang] = useState<'sanskrit' | 'hindi' | 'english'>('sanskrit')
+  const [isBookmarked, setIsBookmarked] = useState(false)
+  const [showNotes, setShowNotes] = useState(false)
+  const [progress, setProgress] = useState(12)
+
+  const verses = {
+    sanskrit: {
+      text: 'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।\nमा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥',
+      translation: 'BG 2.47 · अध्याय २: सांख्य योग',
+    },
+    hindi: {
+      text: 'तुम्हारा अधिकार केवल कर्म करने में है, उसके फलों में कभी नहीं। इसलिए कर्म के फल की वासना मत रखो और न ही अकर्मण्यता में आसक्त होओ।',
+      translation: 'BG 2.47 · कर्मयोग का मूल सिद्धांत',
+    },
+    english: {
+      text: 'You have a right to perform your prescribed duty, but you are not entitled to the fruits of action. Never consider yourself the cause of results, nor be attached to inaction.',
+      translation: 'BG 2.47 · Sankhya Yoga — The Philosophy of Action',
+    },
+  }
+
+  const handleBookmark = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    const next = !isBookmarked
+    setIsBookmarked(next)
+    if (next) {
+      soundManager.playFirstNotification()
+    } else {
+      soundManager.playSubsequentNotification()
+    }
+  }
+
+  const handleNextVerse = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    soundManager.playSubsequentNotification()
+    setProgress((prev) => (prev >= 100 ? 5 : prev + 5))
+  }
+
+  return (
+    <div
+      className="p-4 sm:p-5 bg-gradient-to-br from-[#1E1711] via-[#2A1F17] to-[#120E0A] text-amber-50 rounded-2xl border border-amber-600/30 shadow-inner select-none"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Top Header with Language Selector */}
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-amber-500/20 text-[12px]">
+        <div className="flex items-center gap-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
+          <span className="font-extrabold text-amber-200">GitaQuest · Multilingual Reader</span>
+        </div>
+
+        {/* Language Tabs */}
+        <div className="flex items-center gap-1 p-1 rounded-xl bg-black/40 border border-amber-500/20">
+          <button
+            type="button"
+            onClick={() => {
+              setLang('sanskrit')
+              soundManager.playSubsequentNotification()
+            }}
+            className={`px-2.5 py-0.5 rounded-lg text-[11px] font-bold transition-colors cursor-pointer ${
+              lang === 'sanskrit'
+                ? 'bg-amber-500 text-slate-950 shadow-sm'
+                : 'text-amber-300 hover:text-white'
+            }`}
+          >
+            संस्कृत
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setLang('hindi')
+              soundManager.playSubsequentNotification()
+            }}
+            className={`px-2.5 py-0.5 rounded-lg text-[11px] font-bold transition-colors cursor-pointer ${
+              lang === 'hindi'
+                ? 'bg-amber-500 text-slate-950 shadow-sm'
+                : 'text-amber-300 hover:text-white'
+            }`}
+          >
+            हिन्दी
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setLang('english')
+              soundManager.playSubsequentNotification()
+            }}
+            className={`px-2.5 py-0.5 rounded-lg text-[11px] font-bold transition-colors cursor-pointer ${
+              lang === 'english'
+                ? 'bg-amber-500 text-slate-950 shadow-sm'
+                : 'text-amber-300 hover:text-white'
+            }`}
+          >
+            English
+          </button>
+        </div>
+      </div>
+
+      {/* Verse Card */}
+      <div className="p-4 rounded-xl bg-black/40 border border-amber-500/20 text-center relative overflow-hidden">
+        <div className="text-[11px] font-mono text-amber-400 font-semibold mb-1 tracking-wider uppercase">
+          {verses[lang].translation}
+        </div>
+        <p className="text-[15px] sm:text-[16px] font-serif leading-relaxed text-amber-100 m-0 whitespace-pre-line my-2">
+          {verses[lang].text}
+        </p>
+
+        {/* Action Controls */}
+        <div className="mt-3 pt-3 border-t border-amber-500/15 flex items-center justify-between text-[12px]">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleBookmark}
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+                isBookmarked
+                  ? 'bg-amber-500 text-slate-950 shadow-sm'
+                  : 'bg-white/5 hover:bg-white/10 text-amber-300 border border-amber-500/30'
+              }`}
+            >
+              <span>{isBookmarked ? '★ Bookmarked' : '☆ Bookmark'}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowNotes(!showNotes)}
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-amber-300 border border-amber-500/30 text-[11px] font-medium cursor-pointer"
+            >
+              <span>📝 Notes</span>
+            </button>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleNextVerse}
+            className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-[11px] font-bold cursor-pointer transition-colors"
+          >
+            <span>Next Verse &rarr;</span>
+          </button>
+        </div>
+
+        {/* Notes Reveal */}
+        {showNotes && (
+          <div className="mt-3 p-2.5 rounded-lg bg-amber-950/40 border border-amber-500/20 text-left text-[12px] text-amber-200">
+            <span className="font-bold text-amber-300 block mb-0.5">Personal Reflection:</span>
+            <span>Focus on continuous dedication to craft, releasing anxiety over future metrics.</span>
+          </div>
+        )}
+      </div>
+
+      {/* Progress & Live App Link Footer */}
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-amber-500/15 text-[11px] text-amber-300/80">
+        <div className="flex items-center gap-2">
+          <span>Daily Goal: 5 Verses/day</span>
+          <span>·</span>
+          <span className="text-amber-400 font-bold">{progress}% Completed</span>
+        </div>
+        <a
+          href="https://gitaquest.heygrowin.in"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 font-bold underline underline-offset-2"
+        >
+          <span>Open Web App</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
+    </div>
+  )
+}
+

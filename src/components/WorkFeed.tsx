@@ -7,6 +7,7 @@ import {
   AnshColorLabInteractive,
   SkolarInteractive,
   HeyBlogInteractive,
+  GitaQuestInteractive,
   WorkMetricsBar,
 } from './InteractiveProjectWidgets'
 
@@ -97,6 +98,9 @@ function renderProjectInteractive(project: ProjectCardData) {
   const id = project.id?.toLowerCase() || ''
   const title = project.title?.toLowerCase() || ''
 
+  if (slug.includes('gitaquest') || id.includes('gitaquest') || title.includes('gita')) {
+    return <GitaQuestInteractive />
+  }
   if (slug.includes('nursery') || id.includes('nursery') || title.includes('nursery')) {
     return <RajaNurseryInteractive />
   }
@@ -322,18 +326,18 @@ export function WorkFeed<T extends ProjectCardData = ProjectCardData>({
                   {/* LinkedIn Header */}
                   <div className="flex items-start justify-between mb-3.5 pb-2 border-b border-slate-100 dark:border-slate-800">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-[13px] grid place-items-center flex-none shadow-md">
-                        SK
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 via-indigo-600 to-amber-600 text-white font-bold text-[13px] grid place-items-center flex-none shadow-md">
+                        {initials}
                       </div>
                       <div>
                         <div className="flex items-center gap-1.5 leading-tight">
                           <span className="text-[14px] font-bold text-slate-900 dark:text-white">
-                            {postCard.postAuthorName || 'SKOLAR'}
+                            {postCard.postAuthorName || effectiveName}
                           </span>
                           <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400">· 1st</span>
                         </div>
                         <span className="text-[12px] text-slate-600 dark:text-slate-400 font-medium line-clamp-1">
-                          {postCard.postHeadline || 'International Study Advisory · University Admissions in Italy'}
+                          {postCard.postHeadline || (project.client?.clientDescription || 'Professional Product Case Study')}
                         </span>
                         <div className="flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                           <span>{postCard.postTime || '1w'}</span>

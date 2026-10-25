@@ -22,6 +22,68 @@ import { FactItem } from '@/components/ThreeFacts'
 // ========================================================
 export const DEFAULT_PROJECTS: FullProjectStory[] = [
   {
+    id: 'proj-gitaquest',
+    title: 'GitaQuest — Bhagavad Gita Reading App',
+    slug: 'gitaquest',
+    anonymousSlug: 'gitaquest-reading-platform',
+    oneLiner:
+      'Built a multilingual Bhagavad Gita reading platform with flexible daily reading, bookmarks, personal notes, and progress tracking across all 18 chapters.',
+    status: 'LIVE',
+    tier: 'flagship',
+    order: 1,
+    audiences: ['hire', 'build'],
+    client: {
+      clientName: 'HeyGrowin',
+      clientDescription:
+        'a digital product studio building practical web and software solutions',
+      clientPermission: false,
+    },
+    postCard: {
+      postStyle: 'pro-post',
+      postAuthorName: 'Ansh Rajput',
+      postHeadline: 'From a personal reading problem to a working digital product',
+      postText:
+        'I built GitaQuest to make reading the Bhagavad Gita more convenient while away from home. It supports Sanskrit, Hindi, and English, with bookmarks, personal notes, flexible reading goals, and progress tracking.',
+      postTime: 'now',
+      postImageUrl: undefined,
+      postImageIsConcept: false,
+    },
+    atAGlance: {
+      role: 'Product designer and developer',
+      duration: 'Live web application',
+      stack: [
+        { tag: 'Web Development' },
+        { tag: 'UI/UX Design' },
+        { tag: 'JavaScript' },
+        { tag: 'Product Development' },
+      ],
+      result:
+        'A live multilingual reading experience with flexible daily reading, saved verses, personal reflections, progress tracking, and a completion certificate.',
+    },
+    story: {
+      person:
+        'Chapter 1: The person — GitaQuest began with a personal habit. While living in Italy and balancing university with development work, Ansh wanted to continue reading the Bhagavad Gita even when his physical book and reading stand were not available.',
+      struggle:
+        'Chapter 2: The struggle — Reading at home was straightforward, but maintaining the same routine while away was less convenient. Carrying a physical book everywhere was not always practical, making it harder to find a consistent moment for reading and reflection.',
+      built:
+        'Chapter 3: What I built — I developed GitaQuest, a digital reading platform for the Bhagavad Gita. Readers can explore Sanskrit, Hindi, and English, choose how much to read each day, bookmark verses, write personal notes, and track progress through all 18 chapters.',
+      turningPoint:
+        'Chapter 4: The moment it changed — The idea moved beyond solving my own reading problem when I decided to make the experience available to other people. Instead of remaining a personal experiment, GitaQuest became a live web application that people can access without mandatory account creation.',
+      today:
+        'Chapter 5: Today — GitaQuest is available as a web application at gitaquest.heygrowin.in. It provides multilingual reading, personal bookmarks and notes, progress tracking, and a completion certificate. The Android application was described as undergoing publication review in the project notes; its current store status needs confirmation.',
+    },
+    tradeOffs: [
+      {
+        point:
+          'Prioritised access without mandatory sign-in so readers can start immediately, rather than making account creation a prerequisite for reading.',
+      },
+      {
+        point:
+          'Kept the product focused on reading, reflection, and progress tracking instead of adding unnecessary social features that could distract from the core experience.',
+      },
+    ],
+  },
+  {
     id: 'proj-raja-nursery',
     title: 'Raja Nursery',
     slug: 'raja-nursery',
@@ -30,7 +92,7 @@ export const DEFAULT_PROJECTS: FullProjectStory[] = [
       'From zero online presence to a complete digital store, billing software and pot tracking.',
     status: 'IN USE',
     tier: 'flagship',
-    order: 1,
+    order: 2,
     audiences: ['client', 'hire'],
     client: {
       clientName: 'Raja Nursery',
@@ -85,7 +147,7 @@ export const DEFAULT_PROJECTS: FullProjectStory[] = [
       'Inventory tracking running daily for 2+ years without a single quiet failure.',
     status: 'IN USE',
     tier: 'flagship',
-    order: 2,
+    order: 3,
     audiences: ['client', 'hire', 'build'],
     client: {
       clientName: 'Ansh Color Lab',
@@ -140,7 +202,7 @@ export const DEFAULT_PROJECTS: FullProjectStory[] = [
       'Automated European university application intake, student tracking and document pipeline.',
     status: 'IN USE',
     tier: 'flagship',
-    order: 3,
+    order: 4,
     audiences: ['client', 'hire'],
     client: {
       clientName: 'SKOLAR',
@@ -195,7 +257,7 @@ export const DEFAULT_PROJECTS: FullProjectStory[] = [
       'Autonomous publishing platform generating 300+ Google search impressions.',
     status: 'IN USE',
     tier: 'supporting',
-    order: 4,
+    order: 5,
     audiences: ['build', 'hire'],
     client: {
       clientName: 'HeyBlog',
